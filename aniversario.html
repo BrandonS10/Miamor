@@ -378,6 +378,7 @@
 
     <script>
         // --- CONTROL EXCLUSIVO DE ACCESO (VENEZUELA VS MEXICO) ---
+        // --- CONTROL EXCLUSIVO DE ACCESO (CUENTA REGRESIVA PARA EL 25 A LAS 3PM) ---
         function checkAccess() {
             const now = new Date();
             
@@ -385,30 +386,37 @@
             // Venezuela es UTC-4 (240 min). México Centro es UTC-6 (360 min).
             const offset = now.getTimezoneOffset();
 
-            // Si eres tú desde Venezuela (o un huso horario igual/menor como UTC-4) pasas directo
+            // Si eres tú desde Venezuela pasas directo siempre
             if (offset <= 240) {
                 unlockPage();
                 return;
             }
 
-            // Para Helen (México Centro - Poza Rica): Solo abre a las 3:00 PM (Hora 15) en adelante
-            const hoursMX = now.getHours();
-            if (hoursMX >= 15) {
+            // Fecha y hora objetivo: 25 de Junio a las 3:00 PM (Año actual dinámico)
+            const target = new Date(now.getFullYear(), 5, 25, 15, 0, 0); 
+            const diff = target - now;
+
+            // Si ya pasó la fecha y hora objetivo, Helen puede entrar libremente
+            if (diff <= 0) {
                 unlockPage();
             } else {
-                // Sigue bloqueado, calculamos cuenta regresiva para ella
-                const target = new Date();
-                target.setHours(15, 0, 0, 0);
-                const diff = target - now;
-                
-                const h = Math.floor(diff / (1000 * 60 * 60));
+                // Sigue bloqueado, calculamos los días, horas, minutos y segundos restantes para ella
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const s = Math.floor((diff % (1000 * 60)) / 1000);
                 
-                document.getElementById('lock-timer').innerText = `Faltan: ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')} ⏳🌸`;
+                // Formateamos el texto para mostrar también los días si hiciera falta, o solo horas
+                let countdownText = "";
+                if (d > 0) {
+                    countdownText = `Faltan: ${d}d ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')} ⏳🌸`;
+                } else {
+                    countdownText = `Faltan: ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')} ⏳🌸`;
+                }
+                
+                document.getElementById('lock-timer').innerText = countdownText;
             }
         }
-
         function unlockPage() {
             document.getElementById('lock-screen').style.display = 'none';
             document.getElementById('main-content').style.display = 'flex';
@@ -465,7 +473,7 @@
         calculateTime();
 
         function makeAWish() {
-            alert("💭✨ Cierra los ojos por un segundo al lado de Brandon, escucha 'Die With A Smile' de fondo y pide ese deseo tan bonito para vuestro amor... ¡Que dure toda la vida! 💖🧸🌸");
+            alert("💭✨ Cierra los ojos por un segundo al lado de Brandon🌸");
         }
 
         // --- TEXTOS DE LAS CARTAS ---
