@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nanami Kento // Un rincón especial 🌸</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Playfair+Display:ital,wght@0,500;1,400&family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --bg-soft: #fff9f9; 
+            --primary-rose: #ffb7c5; 
+            --dark-rose: #f39aa9; 
+            --suit-brown: #7c6753; 
+            --accent-gold: #dfba81; 
+            --text-main: #3a3535;
+            --white: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-soft);
+            color: var(--text-main);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- EFECTO MÁGICO: Pétalos y Destellos Flotantes --- */
+        .falling-sparkle {
+            position: fixed;
+            top: -20px;
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.7;
+            animation: drift linear forwards;
+        }
+
+        @keyframes drift {
+            to {
+                transform: translateY(105vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* --- CONTENEDOR CENTRAL DE REVISTA --- */
+        .magazine-wrapper {
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- CABECERA --- */
+        header {
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 35px;
+            position: relative;
+        }
+
+        header::before {
+            content: 'ナナミ ケント';
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Cinzel', serif;
+            font-size: 3rem;
+            color: rgba(255, 183, 197, 0.25);
+            letter-spacing: 10px;
+            z-index: -1;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            color: var(--suit-brown);
+            margin: 0;
+            letter-spacing: 4px;
+            font-weight: 700;
+        }
+
+        .dedication {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            color: var(--dark-rose);
+            margin-top: 8px;
+        }
+
+        /* --- CRONÓMETRO DE JORNADA --- */
+        .romantic-clock {
+            background: var(--white);
+            border-radius: 50px;
+            padding: 12px 35px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 10px 30px rgba(255, 183, 197, 0.15);
+            margin-bottom: 45px;
+            border: 1px solid rgba(255, 183, 197, 0.4);
+        }
+
+        #timeDisplay {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--suit-brown);
+        }
+
+        #statusText {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--suit-brown);
+            font-weight: 600;
+            border-left: 2px solid var(--primary-rose);
+            padding-left: 15px;
+        }
+
+        /* --- BIOGRAFÍA --- */
+        .bio-card {
+            width: 100%;
+            background: var(--white);
+            border-radius: 24px;
+            box-shadow: 0 15px 45px rgba(124, 103, 83, 0.04);
+            padding: 40px;
+            box-sizing: border-box;
+            margin-bottom: 40px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(255, 183, 197, 0.2);
+        }
+
+        .bio-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 6px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary-rose), var(--accent-gold));
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            color: var(--suit-brown);
+            margin-top: 0;
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .section-title span {
+            color: var(--primary-rose);
+        }
+
+        .bio-text {
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: var(--text-main);
+        }
+
+        .romantic-quote {
+            background-color: #fff5f6;
+            border-radius: 16px;
+            padding: 25px;
+            margin: 30px 0;
+            border-left: 4px solid var(--primary-rose);
+        }
+
+        .quote-content {
+            font-family: 'Playfair Display', serif;
+            font-style: italic;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: var(--suit-brown);
+            margin: 0;
+        }
+
+        /* --- NUEVA SECCIÓN: FICHA COQUETTE & DATOS --- */
+        .info-grid-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            width: 100%;
+            margin-bottom: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .info-grid-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .info-box {
+            background: var(--white);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 10px 35px rgba(255, 183, 197, 0.08);
+            border: 1px solid rgba(255, 183, 197, 0.15);
+        }
+
+        .profile-details {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .profile-details li {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px dashed rgba(255, 183, 197, 0.3);
+            font-size: 0.95rem;
+        }
+
+        .profile-details li:last-child {
+            border-bottom: none;
+        }
+
+        .profile-details strong {
+            color: var(--suit-brown);
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+        }
+
+        /* --- INTERACTIVO: BOTÓN TÉCNICA 7:3 --- */
+        .technique-card {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            background: linear-gradient(135deg, #fffcf7, #fff5f6);
+            border: 2px dashed var(--accent-gold);
+            border-radius: 20px;
+            padding: 30px;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .technique-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 35px rgba(223, 186, 129, 0.2);
+        }
+
+        .ratio-btn {
+            background: var(--suit-brown);
+            color: var(--white);
+            border: none;
+            padding: 12px 25px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            border-radius: 30px;
+            margin-top: 15px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(124, 103, 83, 0.3);
+            transition: background 0.3s;
+        }
+
+        .technique-card:hover .ratio-btn {
+            background: var(--dark-rose);
+        }
+
+        /* Efecto de corte de energía maldita */
+        .slice-effect {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: var(--accent-gold);
+            top: 70%;
+            left: 0;
+            box-shadow: 0 0 15px var(--accent-gold);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .technique-card.active .slice-effect {
+            transform: scaleX(1);
+        }
+
+        /* --- GALERÍA MULTIFOTO (GRID) --- */
+        .gallery-container {
+            width: 100%;
+            margin-bottom: 50px;
+        }
+
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 25px;
+        }
+
+        .photo-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 14px;
+            box-shadow: 0 10px 35px rgba(255, 183, 197, 0.12);
+            border: 1px solid rgba(255, 183, 197, 0.25);
+            cursor: pointer;
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s;
+        }
+
+        .photo-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(243, 154, 169, 0.25);
+            border-color: var(--primary-rose);
+        }
+
+        .image-box {
+            width: 100%;
+            height: 320px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            background: #fdfaf7;
+        }
+
+        .image-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .photo-card:hover .image-box img {
+            transform: scale(1.05);
+        }
+
+        .photo-label {
+            margin-top: 15px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            color: var(--suit-brown);
+            font-weight: 700;
+            text-align: center;
+        }
+
+        /* --- VISOR EN PANTALLA COMPLETA --- */
+        .fullscreen-visor {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(58, 53, 53, 0.96);
+            z-index: 3000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .fullscreen-visor.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .inner-frame {
+            max-width: 85%;
+            max-height: 85vh;
+            background: var(--white);
+            padding: 12px;
+            border-radius: 16px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .fullscreen-visor.show .inner-frame {
+            transform: scale(1);
+        }
+
+        .inner-frame img {
+            max-width: 100%;
+            max-height: 80vh;
+            display: block;
+            object-fit: contain;
+            border-radius: 10px;
+        }
+
+        .exit-button {
+            position: absolute;
+            top: 25px;
+            right: 35px;
+            color: var(--white);
+            font-size: 2.5rem;
+            cursor: pointer;
+            font-weight: 300;
+            transition: color 0.2s;
+        }
+
+        .exit-button:hover {
+            color: var(--primary-rose);
+        }
+
+        /* --- BOTÓN RETORNO --- */
+        .back-navigation {
+            background: linear-gradient(135deg, var(--suit-brown), #5a4b3d);
+            color: var(--white);
+            font-family: 'Cinzel', serif;
+            text-decoration: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            box-shadow: 0 8px 25px rgba(124, 103, 83, 0.2);
+            transition: all 0.3s ease;
+            margin-bottom: 60px;
+            border: 1px solid transparent;
+        }
+
+        .back-navigation:hover {
+            background: transparent;
+            color: var(--suit-brown);
+            border-color: var(--suit-brown);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(124, 103, 83, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="magazine-wrapper">
+        
+        <header>
+            <h1>Kento Nanami</h1>
+            <div class="dedication">Un espacio dedicado a tu personaje favorito 🌸</div>
+        </header>
+
+        <!-- Reloj Dinámico Coquette -->
+        <div class="romantic-clock">
+            <span style="font-size: 1.3rem;">⏳</span>
+            <div id="timeDisplay">00:00:00</div>
+            <div id="statusText">Calculando jornada...</div>
+        </div>
+
+        <!-- Biografía Hermosa -->
+        <section class="bio-card">
+            <h2 class="section-title"><span>✦</span> El Encanto de la Madurez</h2>
+            <p class="bio-text">
+                Kento Nanami es adorado por ser el equilibrio perfecto entre caballerosidad, elegancia y un profundo instinto protector. Su vestimenta impecable, compuesta por su icónico traje sastre de sutiles tonos tierra y su corbata de patrón geométrico, refleja una personalidad estructurada pero profundamente atenta y confiable. 
+            </p>
+
+            <div class="romantic-quote">
+                <p class="quote-content">
+                    "Yo no lo alabo ni lo condeno... Me guío bajo los hechos de la realidad de manera madura."
+                </p>
+            </div>
+
+            <p class="bio-text">
+                Aunque proyecta la seriedad de un hombre de negocios enfocado, su verdadera belleza radica en su nobleza interior: él elige luchar y trabajar duro para resguardar la juventud y los sueños de los que ama, ganándose un lugar irreemplazable como el protector ideal.
+            </p>
+        </section>
+
+        <!-- NUEVA INTERACTIVIDAD: Datos & Técnica de Proporción -->
+        <section class="info-grid-layout">
+            
+            <!-- Ficha Técnica Coquette -->
+            <div class="info-box">
+                <h2 class="section-title"><span>🌸</span> Detalles de un Caballero</h2>
+                <ul class="profile-details">
+                    <li><strong>Cumpleaños:</strong> <span>3 de Julio ♋</span></li>
+                    <li><strong>Estatura:</strong> <span>1.84 m</span></li>
+                    <li><strong>Técnica Maldita:</strong> <span>Técnica de Proporción (7:3)</span></li>
+                    <li><strong>Gustos:</strong> <span>El pan dulce, la buena gastronomía y el café</span></li>
+                    <li><strong>Destino Ideal:</strong> <span>Kuantan, Malasia 🏖️</span></li>
+                </ul>
+            </div>
+
+            <!-- Caja Interactiva Técnica 7:3 -->
+            <div class="technique-card" id="techniqueTrigger" onclick="activateRatio()">
+                <h2 class="section-title" style="margin-bottom: 10px;"><span>✨</span> Energía Maldita</h2>
+                <p class="bio-text" style="font-size: 0.85rem; margin: 0; padding: 0 10px;">
+                    Nanami divide a su objetivo con una línea imaginaria y asesta un golpe crítico justo en la proporción 7:3.
+                </p>
+                <button class="ratio-btn">Activar Técnica 7:3</button>
+                <div class="slice-effect" id="sliceEffect"></div>
+            </div>
+
+        </section>
+
+        <!-- Galería de Fotos - Colección Helen -->
+        <section class="gallery-container">
+            <h2 class="section-title" style="justify-content: center;"><span>✦</span> Álbum de Retratos Premium ✦</h2>
+            
+            <div class="photo-grid">
+                
+                <!-- Foto 1 -->
+                <div class="photo-card" onclick="openVisor(this)">
+                    <div class="image-box">
+                        <img src="https://cdn.rafled.com/anime-icons/images/534379181c27abae8e3b0b082dc83703cebb1642c17c69365b1ca23dc3225648.jpg" alt="Nanami Art 1">
+                    </div>
+                    <div class="photo-label">Estilo Impecable</div>
+                </div>
+
+                <!-- Foto 2 -->
+                <div class="photo-card" onclick="openVisor(this)">
+                    <div class="image-box">
+                        <img src="https://i.pinimg.com/736x/8a/14/99/8a14995ba391690c7066aa6cbc4f5999.jpg" alt="Nanami Art 2">
+                    </div>
+                    <div class="photo-label">Caballero de Jujutsu</div>
+                </div>
+
+                <!-- Foto 3 -->
+                <div class="photo-card" onclick="openVisor(this)">
+                    <div class="image-box">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRoSV9qiiTf3AOQuqOIuGzwe9k-f6le-4DCsUbf7x2R_0dXw-45HxkjzL4&s=10" alt="Nanami Art 3">
+                    </div>
+                    <div class="photo-label">Presencia Firme</div>
+                </div>
+
+                <!-- Foto 4 -->
+                <div class="photo-card" onclick="openVisor(this)">
+                    <div class="image-box">
+                        <img src="https://preview.redd.it/what-do-you-think-of-nanami-kento-v0-husyn2lxth6e1.jpeg?auto=webp&s=23c820dd88b5219399d67be6843f54b3ca3b5888" alt="Nanami Art 4">
+                    </div>
+                    <div class="photo-label">Mirada Serena</div>
+                </div>
+
+                <!-- Foto 5 -->
+                <div class="photo-card" onclick="openVisor(this)">
+                    <div class="image-box">
+                        <img src="https://m.media-amazon.com/images/I/610dVYVEeDL._AC_UF894,1000_QL80_.jpg" alt="Nanami Art 5">
+                    </div>
+                    <div class="photo-label">Modo Corporativo</div>
+                </div>
+
+                <!-- Foto 6 -->
+                <div class="photo-card" onclick="openVisor(this)">
+                    <div class="image-box">
+                        <img src="https://i.scdn.co/image/ab67616d0000b2731193741f59be93d872aefcaa" alt="Nanami Art 6">
+                    </div>
+                    <div class="photo-label">Esencia y Perfección</div>
+                </div>
+
+                <!-- Foto 7 -->
+                <div class="photo-card" onclick="openVisor(this)">
+                    <div class="image-box">
+                        <img src="https://animeargentina.net/wp-content/uploads/2022/07/Nanami.Kento_.full_.3257780-1024x833.jpg" alt="Nanami Art 7">
+                    </div>
+                    <div class="photo-label">Determinación Pura</div>
+                </div>
+
+                <!-- Foto 8 -->
+                <div class="photo-card" onclick="openVisor(this)">
+                    <div class="image-box">
+                        <img src="https://i.pinimg.com/736x/20/91/a5/2091a5b3cf2ddafc153818c60e05ded7.jpg" alt="Nanami Art 8">
+                    </div>
+                    <div class="photo-label">Espíritu Inquebrantable</div>
+                </div>
+
+            </div>
+        </section>
+        <!-- Navegación de Regreso -->
+        <a href="index.html" class="back-navigation">← REGRESAR AL MENÚ</a>
+    </div>
+
+    <!-- Visor Pantalla Completa Premium -->
+    <div id="photoVisor" class="fullscreen-visor" onclick="closeVisor()">
+        <span class="exit-button">&times;</span>
+        <div class="inner-frame" onclick="event.stopPropagation()">
+            <img id="visorImage" src="" alt="Vista Expandida">
+        </div>
+    </div>
+
+    <script>
+        // Lógica de caída suave de pétalos rosas, destellos y tazas de café
+        function spawnSparkles() {
+            const symbols = ['🌸', '✨', '☕', '🤍'];
+            const element = document.createElement('div');
+            element.classList.add('falling-sparkle');
+            element.innerText = symbols[Math.floor(Math.random() * symbols.length)];
+            element.style.left = Math.random() * 100 + 'vw';
+            element.style.animationDuration = Math.random() * 3 + 5 + 's'; 
+            element.style.fontSize = Math.random() * 10 + 15 + 'px';
+            document.body.appendChild(element);
+            
+            setTimeout(() => { element.remove(); }, 8000);
+        }
+        setInterval(spawnSparkles, 700);
+
+        // Reloj Dinámico con dedicatorias especiales según la hora
+        function refreshClock() {
+            const now = new Date();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            const s = String(now.getSeconds()).padStart(2, '0');
+            
+            document.getElementById('timeDisplay').innerText = `${h}:${m}:${s}`;
+            
+            const statusBox = document.getElementById('statusText');
+            const hour = now.getHours();
+
+            if (hour >= 17 || hour < 9) {
+                statusBox.innerText = "Horas Extra • Tiempo de consentir a Helen 🌸";
+                statusBox.style.color = "var(--dark-rose)";
+            } else {
+                statusBox.innerText = "Horario de Oficina • Con elegancia y calma";
+                statusBox.style.color = "var(--suit-brown)";
+            }
+        }
+        setInterval(refreshClock, 1000);
+        refreshClock();
+
+        // Control del visualizador expandido de fotos
+        const visor = document.getElementById('photoVisor');
+        const visorImg = document.getElementById('visorImage');
+
+        function openVisor(card) {
+            const src = card.querySelector('img').src;
+            visorImg.src = src;
+            visor.classList.add('show');
+        }
+
+        function closeVisor() {
+            visor.classList.remove('show');
+        }
+
+        // Lógica interactiva para la Técnica Maldita 7:3
+        function activateRatio() {
+            const card = document.getElementById('techniqueTrigger');
+            const btn = card.querySelector('.ratio-btn');
+            
+            card.classList.add('active');
+            btn.innerText = "¡Punto Crítico Detectado! 🎯";
+            btn.style.background = "var(--accent-gold)";
+
+            setTimeout(() => {
+                card.classList.remove('active');
+                btn.innerText = "Activar Técnica 7:3";
+                btn.style.background = "var(--suit-brown)";
+            }, 1200);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+ <!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para mi personita favorita 🌹</title>
+    <style>
+        :root {
+            --bg-dark: #ffdcdcff;
+            --card-bg: #ff9c9cff;
+            --rose-gold: #000000ff;
+            --heart-red: #ff4b5c;
+            --text-color: #000000ff;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-color);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .heart-loader {
+            font-size: 3rem;
+            animation: beat 1.2s infinite;
+            margin-top: 20px;
+        }
+
+        @keyframes beat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+
+        h1 {
+            color: var(--rose-gold);
+            font-size: 1.8rem;
+            margin-bottom: 5px;
+            text-align: center;
+        }
+
+        .subtitle {
+            font-style: italic;
+            opacity: 0.8;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid rgba(0, 0, 0, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            text-align: center;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            border-color: var(--rose-gold);
+        }
+
+        .btn-love {
+            background: linear-gradient(135deg, var(--rose-gold), #000000ff);
+            color: #ffa1a1ff;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(220, 169, 109, 0.4);
+        }
+
+        .btn-love:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 20px rgba(220, 169, 109, 0.6);
+        }
+
+        .hidden-message {
+            display: none;
+            margin-top: 20px;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            color: #000000ff;
+            text-align: left;
+            border-left: 3px solid var(--rose-gold);
+            padding-left: 15px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        /* Contador de tiempo juntos o mensaje bonito */
+        .highlight-box {
+            background: rgba(224, 169, 109, 0.1);
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-size: 1.1rem;
+            color: var(--rose-gold);
+            font-weight: bold;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        footer {
+            margin-top: auto;
+            font-size: 0.8rem;
+            opacity: 0.5;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heart-loader">❤️</div>
+    <h1>Para mi Helen, amor de mi vida</h1>
+    <div class="subtitle">La verdad llevo un tiempo sin programar amor, pero a esforzarme</div>
+
+    <div class="container">
+
+        <!-- CARTA 1: Mensaje Principal -->
+        <div class="card">
+            <h3 style="color: var(--rose-gold); margin-top: 0;">🌹 Una cartita para ti mi linda bebe</h3>
+            <p>Se que estamos pasando un momento dificil amor, pero quería recordarte algo mi vida</p>
+            <button class="btn-love" onclick="mostrarMensaje('msg1')">Abrir Carta</button>
+            
+            <div id="msg1" class="hidden-message">
+                "Que Dios nos bendiga y nos llene de amor uno para el otro mi amor, te amo demasiado y mi vida es contigo amor, yo quiero pasar mi vida a tu lado, te amo y adoro tanto mi bebe, yo de verdad, te quiero demostrar lo mucho que te amo"
+            </div>
+        </div>
+
+        <!-- CARTA 2: Detalle Lindo e Interactivo -->
+        <div class="card">
+            <h3 style="color: var(--rose-gold); margin-top: 0;">✨ Recuerda mi amor </h3>
+            Dale click aqui mi niña helencita</p>
+            <button class="btn-love" onclick="mostrarMensaje('msg2')">Ver Recordatorio</button>
+            
+            <div id="msg2" class="hidden-message" style="text-align: center;">
+                <div class="highlight-box">Tu eres mi amor preciosa🧸💖</div>
+                <p style="margin-top: 15px; font-size: 0.9rem;">
+                    Sigamos juntitos amor, brillemos juntitos, seamos tu y yo juntitos
+                </p>
+            </div>
+        </div>
+        <div class="card">
+            <h3 style="color: var(--rose-gold); margin-top: 0;">💖 Quiero recuperarte </h3>
+            Quiero vivir contigo, quiero casarme contigo mi amor</p>
+            <button class="btn-love" onclick="mostrarMensaje('msg3')">Continuar</button>
+            
+            <div id="msg3" class="hidden-message" style="text-align: center;">
+                <div class="highlight-box">Eres el amor de mi vida preciosa, mamasita, linda, hermosa, preciosa🧸💖</div>
+                <p style="margin-top: 15px; font-size: 0.9rem;">
+                    Te amo y te extraño demasiado bebe, eres mi mundo entero mami, quiero cumplir mis sueños contigo, quiero casarme contigo, que Dios nos abrace y nunca nos suelte amorcito
+                </p>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>Brandito estuvo aqui, tu novio estuvo aqui </footer>
+
+    <script>
+        function mostrarMensaje(id) {
+            const mensaje = document.getElementById(id);
+            if (mensaje.style.display === "block") {
+                mensaje.style.display = "none";
+            } else {
+                mensaje.style.display = "block";
+            }
+        }
+    </script>
+
+</body>
+</html>
