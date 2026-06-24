@@ -1,0 +1,1426 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Para ti, mi amor</title>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&family=Dancing+Script:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --pink: #e8336a;
+      --pink-light: #fce4ec;
+      --pink-glow: rgba(232, 51, 106, 0.3);
+      --pink-soft: #f8bbd0;
+      --bg: #fdf2f5;
+      --card: #ffffff;
+      --text: #4a1a2e;
+      --text-light: #8a5070;
+      --orange: #e86833;
+      --gold: #ffd54f;
+    }
+
+    body {
+      font-family: 'Quicksand', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .cursive { font-family: 'Dancing Script', cursive; }
+
+    /* ---- FLOATING HEARTS ---- */
+    .hearts-container { position: fixed; inset: 0; pointer-events: none; z-index: 0; overflow: hidden; }
+    .floating-heart {
+      position: absolute;
+      bottom: -60px;
+      animation: floatUp linear infinite;
+      opacity: 0.5;
+      color: var(--pink);
+    }
+    @keyframes floatUp {
+      0% { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.5; }
+      50% { opacity: 0.8; }
+      100% { transform: translateY(-110vh) rotate(360deg) scale(0.5); opacity: 0; }
+    }
+
+    /* ---- STEPS ---- */
+    .step {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2.5rem 1.25rem 5rem;
+      position: relative;
+      z-index: 1;
+    }
+    .step.active { display: flex; animation: stepEnter 0.7s cubic-bezier(0.22, 1, 0.36, 1); }
+    @keyframes stepEnter {
+      0% { opacity: 0; transform: translateY(40px) scale(0.97); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* ---- HEARTBEAT ---- */
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.3); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.15); }
+      60% { transform: scale(1); }
+    }
+    .heartbeat { animation: heartbeat 1.5s ease-in-out infinite; }
+
+    /* ---- PULSE GLOW ---- */
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 20px var(--pink-glow); }
+      50% { box-shadow: 0 0 40px var(--pink-glow), 0 0 60px rgba(232,51,106,0.15); }
+    }
+
+    /* ---- SPARKLE ---- */
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0) rotate(0deg); }
+      50% { opacity: 1; transform: scale(1) rotate(180deg); }
+    }
+
+    /* ---- FLOAT GENTLE ---- */
+    @keyframes floatGentle {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* ---- SHIMMER ---- */
+    @keyframes shimmer {
+      0% { background-position: -200% center; }
+      100% { background-position: 200% center; }
+    }
+
+    /* ---- ROTATE SLOW ---- */
+    @keyframes rotateSlow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* ---- TWINKLE ---- */
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.2; transform: scale(0.8); }
+      50% { opacity: 1; transform: scale(1.2); }
+    }
+
+    /* ---- WAVE ---- */
+    @keyframes wave {
+      0%, 100% { transform: rotate(0deg); }
+      25% { transform: rotate(14deg); }
+      75% { transform: rotate(-14deg); }
+    }
+
+    /* ---- BOUNCE IN ---- */
+    @keyframes bounceIn {
+      0% { opacity: 0; transform: scale(0.3); }
+      50% { transform: scale(1.08); }
+      70% { transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    .bounce-in { animation: bounceIn 0.6s ease-out forwards; }
+
+    /* ---- BUTTONS ---- */
+    .btn-yes {
+      background: linear-gradient(135deg, var(--pink) 0%, #d42d5e 100%);
+      color: white;
+      border: none;
+      padding: 1rem 3rem;
+      border-radius: 9999px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.25rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: pulseGlow 2s ease-in-out infinite;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-yes::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+      background-size: 200% 100%;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    .btn-yes:hover { transform: scale(1.1); }
+
+    .btn-no {
+      background: #f3e0e6;
+      color: var(--text-light);
+      border: 2px solid rgba(232,51,106,0.2);
+      padding: 0.75rem 2rem;
+      border-radius: 9999px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.15s ease;
+    }
+
+    .btn-continue {
+      background: linear-gradient(135deg, var(--pink) 0%, #d42d5e 100%);
+      color: white;
+      border: none;
+      padding: 1rem 2.5rem;
+      border-radius: 9999px;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      animation: pulseGlow 2s ease-in-out infinite;
+      margin-top: 1rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .btn-continue::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+      background-size: 200% 100%;
+      animation: shimmer 3s ease-in-out infinite;
+    }
+    .btn-continue:hover { transform: scale(1.05); }
+
+    /* ---- CARD ---- */
+    .card {
+      background: var(--card);
+      border: 2px solid rgba(232,51,106,0.15);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      box-shadow: 0 8px 32px rgba(232,51,106,0.08);
+      max-width: 500px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* ---- DECORATIVE DIVIDER ---- */
+    .divider {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin: 1.25rem 0;
+      width: 100%;
+      max-width: 300px;
+    }
+    .divider-line {
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--pink-soft), transparent);
+    }
+    .divider-icon {
+      color: var(--pink);
+      opacity: 0.5;
+      font-size: 0.8rem;
+      animation: heartbeat 2s ease-in-out infinite;
+    }
+
+    /* ---- DECORATIVE RIBBON ---- */
+    .ribbon {
+      background: linear-gradient(135deg, var(--pink-light) 0%, rgba(232,51,106,0.08) 100%);
+      border-radius: 9999px;
+      padding: 0.5rem 1.5rem;
+      font-size: 0.85rem;
+      color: var(--pink);
+      font-weight: 600;
+      border: 1px solid rgba(232,51,106,0.15);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    /* ---- TWINKLING STARS BG ---- */
+    .stars-container {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    .star {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: var(--pink);
+      border-radius: 50%;
+      animation: twinkle ease-in-out infinite;
+    }
+
+    /* ---- PHOTOS GRID ---- */
+    .photos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      max-width: 500px;
+      width: 100%;
+      margin: 1.25rem 0;
+    }
+    .photo-frame {
+      border-radius: 1.25rem;
+      overflow: hidden;
+      border: 3px solid var(--pink);
+      box-shadow: 0 4px 20px var(--pink-glow);
+      aspect-ratio: 1;
+      background: var(--pink-light);
+      position: relative;
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .photo-frame:hover { transform: scale(1.08) rotate(2deg); box-shadow: 0 8px 30px var(--pink-glow); }
+    .photo-frame:nth-child(2) { transform: translateY(-8px); }
+    .photo-frame:nth-child(2):hover { transform: scale(1.08) rotate(-2deg) translateY(-8px); }
+    .photo-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .photo-placeholder {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      color: var(--pink);
+      font-size: 0.75rem;
+      text-align: center;
+      padding: 0.5rem;
+    }
+    .photo-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: linear-gradient(transparent, rgba(232,51,106,0.8));
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 600;
+      padding: 1.5rem 0.5rem 0.4rem;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .photo-frame:hover .photo-label { opacity: 1; }
+
+    /* ---- GAME CARDS ---- */
+    .game-cards { display: flex; gap: 1.5rem; margin: 1.5rem 0; flex-wrap: wrap; justify-content: center; }
+    .game-card {
+      background: var(--card);
+      border: 3px solid rgba(232,51,106,0.15);
+      border-radius: 1.5rem;
+      padding: 2rem 2.5rem;
+      cursor: pointer;
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      text-align: center;
+      min-width: 180px;
+      position: relative;
+      overflow: hidden;
+    }
+    .game-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, transparent 60%, rgba(232,51,106,0.05) 100%);
+      pointer-events: none;
+    }
+    .game-card:hover {
+      transform: translateY(-10px);
+      border-color: var(--pink);
+      box-shadow: 0 16px 40px var(--pink-glow);
+    }
+    .game-card.selected {
+      border-color: var(--pink);
+      background: linear-gradient(135deg, var(--pink-light) 0%, rgba(232,51,106,0.05) 100%);
+      box-shadow: 0 12px 36px var(--pink-glow);
+      transform: scale(1.05);
+    }
+    .game-icon { font-size: 3rem; margin-bottom: 0.5rem; }
+    .game-name { font-weight: 700; font-size: 1.1rem; }
+    .game-sub { color: var(--text-light); font-size: 0.85rem; margin-top: 0.25rem; }
+
+    /* ---- FOOD SECTION ---- */
+    .food-suggestions { display: flex; flex-wrap: wrap; gap: 0.5rem; justify-content: center; margin: 1rem 0; }
+    .food-chip {
+      background: var(--pink-light);
+      border: 2px solid transparent;
+      border-radius: 9999px;
+      padding: 0.5rem 1.25rem;
+      font-family: 'Quicksand', sans-serif;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text);
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .food-chip:hover { border-color: var(--pink); background: rgba(232,51,106,0.12); transform: translateY(-2px); }
+    .food-chip.selected { border-color: var(--pink); background: rgba(232,51,106,0.15); color: var(--pink); transform: scale(1.05); }
+
+    .food-input {
+      border: 2px solid rgba(232,51,106,0.2);
+      border-radius: 9999px;
+      padding: 0.85rem 1.5rem;
+      font-family: 'Quicksand', sans-serif;
+      font-size: 1rem;
+      width: 100%;
+      max-width: 350px;
+      text-align: center;
+      color: var(--text);
+      background: white;
+      outline: none;
+      transition: all 0.3s;
+    }
+    .food-input:focus { border-color: var(--pink); box-shadow: 0 0 20px var(--pink-glow); }
+    .food-input::placeholder { color: var(--text-light); }
+
+    .food-reaction {
+      color: var(--pink);
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-top: 0.5rem;
+      min-height: 1.5rem;
+      font-style: italic;
+    }
+
+    /* ---- MESSAGE LINES ---- */
+    .message-line {
+      opacity: 0;
+      transform: translateY(15px);
+      transition: all 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+      color: var(--text);
+      font-size: 1.15rem;
+      line-height: 1.8;
+    }
+    .message-line.visible { opacity: 1; transform: translateY(0); }
+
+    /* ---- LOVE LETTER ---- */
+    .love-letter {
+      background: var(--card);
+      border: 2px solid rgba(232,51,106,0.2);
+      border-radius: 1.5rem;
+      padding: 2rem;
+      max-width: 500px;
+      width: 100%;
+      position: relative;
+      box-shadow: 0 8px 32px rgba(232,51,106,0.1);
+    }
+    .letter-deco {
+      position: absolute;
+      color: var(--pink);
+      opacity: 0.25;
+      font-size: 1.2rem;
+    }
+    .letter-deco.tl { top: 0.75rem; left: 1rem; }
+    .letter-deco.tr { top: 0.75rem; right: 1rem; }
+    .letter-deco.bl { bottom: 0.75rem; left: 1rem; }
+    .letter-deco.br { bottom: 0.75rem; right: 1rem; }
+    .letter-border-glow {
+      position: absolute;
+      inset: -2px;
+      border-radius: 1.5rem;
+      background: linear-gradient(135deg, var(--pink), var(--pink-soft), var(--pink));
+      background-size: 200% 200%;
+      animation: shimmer 4s ease-in-out infinite;
+      z-index: -1;
+      opacity: 0.3;
+    }
+
+    /* ---- PROGRESS DOTS ---- */
+    .progress {
+      position: fixed;
+      bottom: 1.25rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 0.5rem;
+      z-index: 10;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(12px);
+      padding: 0.5rem 1rem;
+      border-radius: 9999px;
+      border: 1px solid rgba(232,51,106,0.12);
+      box-shadow: 0 4px 16px rgba(232,51,106,0.08);
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--pink-light);
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      border: 2px solid rgba(232,51,106,0.15);
+    }
+    .dot.active { background: var(--pink); border-color: var(--pink); transform: scale(1.4); box-shadow: 0 0 8px var(--pink-glow); }
+    .dot.done { background: var(--pink); border-color: var(--pink); opacity: 0.4; }
+
+    /* ---- CONFETTI ---- */
+    .confetti-container { position: fixed; inset: 0; pointer-events: none; z-index: 100; }
+    .confetti-piece {
+      position: absolute;
+      top: -10px;
+      animation: confettiFall linear forwards;
+    }
+    @keyframes confettiFall {
+      0% { transform: translateY(0) rotate(0deg) translateX(0); opacity: 1; }
+      100% { transform: translateY(110vh) rotate(720deg) translateX(40px); opacity: 0; }
+    }
+
+    /* ---- GAME PHOTOS GRID ---- */
+    .game-photos-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1rem;
+      max-width: 500px;
+      width: 100%;
+      margin: 1.25rem 0;
+    }
+    .game-photo-frame {
+      border-radius: 1.25rem;
+      overflow: hidden;
+      border: 3px solid var(--pink);
+      box-shadow: 0 4px 20px var(--pink-glow);
+      aspect-ratio: 16/10;
+      background: var(--pink-light);
+      transition: all 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+      position: relative;
+    }
+    .game-photo-frame:hover { transform: scale(1.06) rotate(1deg); box-shadow: 0 8px 30px var(--pink-glow); }
+    .game-photo-frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+    /* ---- LONG TEXT ---- */
+    .long-text-box {
+      background: var(--card);
+      border: 2px solid rgba(232,51,106,0.15);
+      border-radius: 1.5rem;
+      padding: 2.5rem 2rem;
+      max-width: 550px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 8px 32px rgba(232,51,106,0.08);
+      position: relative;
+      overflow: hidden;
+    }
+    .long-text-box::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--pink), transparent);
+      opacity: 0.5;
+    }
+    .long-text-box::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: linear-gradient(90deg, transparent, var(--pink), transparent);
+      opacity: 0.5;
+    }
+
+    /* ---- SUMMARY ---- */
+    .summary-card {
+      background: var(--card);
+      border: 2px solid rgba(232,51,106,0.15);
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      text-align: center;
+      min-width: 140px;
+      box-shadow: 0 4px 16px rgba(232,51,106,0.08);
+      transition: all 0.3s ease;
+    }
+    .summary-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(232,51,106,0.12); }
+    .summary-grid { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; margin: 1.5rem 0; }
+
+    /* ---- SECTION INTRO (cute mini header) ---- */
+    .section-intro {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.25rem;
+      margin-bottom: 0.5rem;
+    }
+    .section-step-num {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--pink);
+      opacity: 0.5;
+    }
+
+    /* ---- ORBIT RING ---- */
+    .orbit-container {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .orbit-ring {
+      position: absolute;
+      border: 1.5px dashed rgba(232,51,106,0.15);
+      border-radius: 50%;
+      animation: rotateSlow 20s linear infinite;
+    }
+    .orbit-dot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background: var(--pink);
+      border-radius: 50%;
+      opacity: 0.4;
+    }
+
+    /* ---- RESPONSIVE ---- */
+    @media (max-width: 500px) {
+      .photos-grid, .game-photos-grid { gap: 0.6rem; }
+      .game-cards { flex-direction: column; align-items: center; }
+      .game-card { min-width: 160px; }
+      .btn-yes { padding: 0.85rem 2.5rem; font-size: 1.1rem; }
+      .love-letter, .long-text-box { padding: 1.5rem 1.25rem; }
+    }
+
+    .heart-svg { display: inline-block; vertical-align: middle; }
+
+    .sparkle-dot {
+      position: absolute;
+      width: 6px;
+      height: 6px;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: sparkle 2s ease-in-out infinite;
+    }
+
+    @keyframes nicknameRotate {
+      0%, 100% { opacity: 0; transform: translateY(5px); }
+      10%, 90% { opacity: 1; transform: translateY(0); }
+    }
+    .nickname {
+      color: var(--pink);
+      font-weight: 600;
+      font-size: 1rem;
+      animation: nicknameRotate 3s ease-in-out infinite;
+    }
+
+    /* ---- INLINE MINI HEART ---- */
+    .mini-heart {
+      display: inline-block;
+      color: var(--pink);
+      animation: heartbeat 2s ease-in-out infinite;
+      font-size: 0.9em;
+    }
+
+    /* ---- GLOW TEXT ---- */
+    .glow-text {
+      text-shadow: 0 0 20px rgba(232,51,106,0.3), 0 0 40px rgba(232,51,106,0.1);
+    }
+
+    /* ---- FADE IN UP CHILDREN ---- */
+    .stagger-in > * {
+      opacity: 0;
+      animation: stepEnter 0.5s ease-out forwards;
+    }
+    .stagger-in > *:nth-child(1) { animation-delay: 0.1s; }
+    .stagger-in > *:nth-child(2) { animation-delay: 0.2s; }
+    .stagger-in > *:nth-child(3) { animation-delay: 0.3s; }
+    .stagger-in > *:nth-child(4) { animation-delay: 0.4s; }
+    .stagger-in > *:nth-child(5) { animation-delay: 0.5s; }
+    .stagger-in > *:nth-child(6) { animation-delay: 0.6s; }
+    .stagger-in > *:nth-child(7) { animation-delay: 0.7s; }
+    .stagger-in > *:nth-child(8) { animation-delay: 0.8s; }
+    .stagger-in > *:nth-child(9) { animation-delay: 0.9s; }
+    .stagger-in > *:nth-child(10) { animation-delay: 1.0s; }
+
+    /* ---- DATE CARD DECO ---- */
+    .date-detail {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid rgba(232,51,106,0.08);
+      font-size: 0.95rem;
+    }
+    .date-detail:last-child { border-bottom: none; }
+    .date-detail-icon { font-size: 1.2rem; }
+  </style>
+</head>
+<body>
+
+  <div class="hearts-container" id="heartsContainer"></div>
+
+  <div class="progress" id="progress"></div>
+
+  <div class="step active" id="step0">
+    <div class="stars-container" id="step0Stars"></div>
+
+    <div id="nicknameLabel" class="nickname cursive" style="font-size: 1.4rem; margin-bottom: 0.75rem;">Mi vida...</div>
+
+    <div class="orbit-container" style="width: 160px; height: 160px; margin-bottom: 1rem;">
+      <div class="orbit-ring" style="width: 150px; height: 150px;">
+        <div class="orbit-dot" style="top: -4px; left: 50%;"></div>
+        <div class="orbit-dot" style="bottom: -4px; left: 50%;"></div>
+      </div>
+      <div class="orbit-ring" style="width: 180px; height: 180px; animation-direction: reverse; animation-duration: 15s;">
+        <div class="orbit-dot" style="top: 50%; right: -4px; background: var(--gold);"></div>
+      </div>
+      <div class="heartbeat" style="position: relative;">
+        <svg class="heart-svg" width="100" height="100" viewBox="0 0 24 24" fill="#e8336a">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+        <div class="sparkle-dot" style="top: 0; left: -8px; animation-delay: 0s;"></div>
+        <div class="sparkle-dot" style="top: -8px; right: 5px; animation-delay: 0.5s;"></div>
+        <div class="sparkle-dot" style="bottom: 8px; left: -5px; animation-delay: 1s;"></div>
+        <div class="sparkle-dot" style="bottom: 0; right: -8px; animation-delay: 1.5s;"></div>
+      </div>
+    </div>
+
+    <h1 class="cursive glow-text" style="font-size: 2.5rem; color: var(--pink); margin-bottom: 0.5rem; text-wrap: balance; text-align: center;">
+      Quieres ser mi San Valentin?
+    </h1>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <svg class="divider-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <div class="divider-line"></div>
+    </div>
+
+    <p style="color: var(--text-light); margin-bottom: 2rem; font-size: 1.05rem;">Solo hay una respuesta correcta...</p>
+
+    <div style="display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap; justify-content: center;">
+      <button class="btn-yes" id="btnYes" onclick="handleYes()">Si, quiero papi</button>
+      <button class="btn-no" id="btnNo" onmouseenter="runAway()" ontouchstart="runAway()" onclick="runAway()">No</button>
+    </div>
+
+    <p id="noCounter" style="color: var(--text-light); font-size: 0.8rem; margin-top: 1.5rem; opacity: 0; transition: opacity 0.3s;"></p>
+  </div>
+
+  <div class="step" id="step1">
+    <div class="section-intro">
+      <span class="section-step-num">Paso 1 de 8</span>
+      <span class="ribbon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="color: var(--pink);"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Nuestros momentos</span>
+    </div>
+
+    <h2 class="cursive glow-text" style="font-size: 2.3rem; color: var(--pink); margin-bottom: 0.25rem;">Nosotros</h2>
+    <p style="color: var(--text-light); margin-bottom: 0.25rem; font-size: 1rem;">Los momentos mas bonitos son contigo</p>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span style="color: var(--pink); opacity: 0.4; font-size: 0.75rem;">&#10022;</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="photos-grid stagger-in" id="photosGrid">
+      <div class="photo-frame">
+        <img src="foto1.jpeg" alt="Nosotros 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="photo-placeholder" style="display:none;">Mi vida</div>
+        <div class="photo-label">Tu y yo</div>
+      </div>
+      <div class="photo-frame">
+        <img src="foto2.jpeg" alt="Nosotros 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="photo-placeholder" style="display:none;">Mi amor</div>
+        <div class="photo-label">Siempre juntos</div>
+      </div>
+      <div class="photo-frame">
+        <img src="foto3.jpeg" alt="Nosotros 3" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+        <div class="photo-placeholder" style="display:none;">Mi preciosa</div>
+        <div class="photo-label">Mi persona favorita</div>
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--pink)" style="opacity: 0.35;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <div class="divider-line"></div>
+    </div>
+
+    <p style="color: var(--text-light); font-style: italic; max-width: 380px; text-align: center; font-size: 0.95rem;">
+      Cada foto guarda un pedacito de lo nuestro... <span class="mini-heart">&#10084;</span>
+    </p>
+
+    <button class="btn-continue" onclick="goToStep(2)">Seguir leyendo</button>
+  </div>
+
+  <div class="step" id="step2">
+    <div class="section-intro">
+      <span class="section-step-num">Paso 2 de 8</span>
+      <span class="ribbon"><span style="animation: wave 1s ease-in-out infinite;">&#9993;</span> Carta de amor</span>
+    </div>
+
+    <h2 class="cursive glow-text" style="font-size: 2.3rem; color: var(--pink); margin-bottom: 0.5rem;">Para ti, mi amor...</h2>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span style="color: var(--gold); opacity: 0.6; font-size: 0.85rem;">&#10022;</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="love-letter" id="loveLetter">
+      <div class="letter-border-glow"></div>
+      <span class="letter-deco tl">&#10084;</span>
+      <span class="letter-deco tr">&#10047;</span>
+      <span class="letter-deco bl">&#10047;</span>
+      <span class="letter-deco br">&#10084;</span>
+
+      <div class="message-line" data-delay="400" style="font-size: 1.25rem; font-weight: 700; color: var(--pink);">Te amo demasiado...</div>
+      <div class="message-line" data-delay="1400" style="margin-top: 0.75rem;">Se que hemos tenido momentos dificiles, y muchas cositas</div>
+      <div class="message-line" data-delay="2400" style="margin-top: 0.5rem;">Pero te amo y te quiero demasiado</div>
+      <div class="message-line" data-delay="3400" style="margin-top: 0.5rem;">Quiero estar contigo siempre mi vida</div>
+      <div class="message-line" data-delay="4400" style="margin-top: 0.5rem;">Quiero pedirte perdon mi vida</div>
+      <div class="message-line" data-delay="5400" style="margin-top: 0.5rem;">Eres mi todo</div>
+      <div class="message-line" data-delay="6400" style="margin-top: 0.75rem; font-weight: 700; color: var(--pink); font-size: 1.15rem;">Te amo con todo mi corazon <span class="mini-heart">&#10084;</span></div>
+    </div>
+
+    <button class="btn-continue" id="btnLoveContinue" style="display: none; margin-top: 1.5rem;" onclick="goToStep(3)">
+      Yo tambien te amo mi amor
+    </button>
+  </div>
+
+  <div class="step" id="step3">
+    <div class="section-intro">
+      <span class="section-step-num">Paso 3 de 8</span>
+      <span class="ribbon">&#127769; Noche de juegos</span>
+    </div>
+
+    <h2 class="cursive glow-text" style="font-size: 2.2rem; color: var(--pink); margin-bottom: 0.25rem;">Nuestra noche perfecta</h2>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span style="color: var(--pink); opacity: 0.4; font-size: 0.85rem;">&#10022;</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <p style="color: var(--text-light); max-width: 400px; text-align: center; margin-bottom: 0.25rem; font-size: 1.05rem;">
+      La pasaremos lindo juntos <span class="mini-heart">&#10084;</span>
+    </p>
+    <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1.25rem; font-style: italic;">Lo que importa es que estemos juntos</p>
+
+    <div class="game-cards">
+      <div class="game-card" id="cardFF" onclick="selectGame('ff')">
+        <div class="game-icon">&#127918;</div>
+        <div class="game-name">Free Fire</div>
+        <div class="game-sub">Toda la noche!</div>
+        <div class="game-sub" id="ffReact" style="color: var(--pink); font-weight: 600; margin-top: 0.5rem; display: none;">Vamos a arrasar en squad!</div>
+      </div>
+      <div class="game-card" id="cardMC" onclick="selectGame('mc')">
+        <div class="game-icon">&#9935;</div>
+        <div class="game-name">Minecraft</div>
+        <div class="game-sub">Construir juntos!</div>
+        <div class="game-sub" id="mcReact" style="color: var(--pink); font-weight: 600; margin-top: 0.5rem; display: none;">Nuestra casita de amor!</div>
+      </div>
+    </div>
+
+    <p id="gameSelectedMsg" style="color: var(--text-light); font-style: italic; font-size: 0.9rem; margin-top: 0.25rem; min-height: 1.5rem;"></p>
+
+    <button class="btn-continue" id="btnGameContinue" style="display: none;" onclick="goToStep(4)">Continuar</button>
+  </div>
+
+  <div class="step" id="step4">
+    <div class="section-intro">
+      <span class="section-step-num">Paso 4 de 8</span>
+      <span class="ribbon" id="gamePhotosRibbon">&#127918; Momentos gamer</span>
+    </div>
+
+    <h2 class="cursive glow-text" style="font-size: 2.1rem; color: var(--pink); margin-bottom: 0.25rem;" id="gamePhotosTitle">Nuestras noches de juego</h2>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span style="color: var(--gold); opacity: 0.5;">&#9733;</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <p style="color: var(--text-light); margin-bottom: 0.25rem; font-size: 1rem;" id="gamePhotosSub">Los mejores momentos gamer juntos</p>
+
+    <div class="game-photos-grid stagger-in" id="ffPhotos" style="display: none;">
+      <div class="game-photo-frame">
+        <img src="ff1.jpeg" alt="Free Fire 1" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=photo-placeholder>ff1.jpg</div>';">
+      </div>
+      <div class="game-photo-frame">
+        <img src="ff2.jpeg" alt="Free Fire 2" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=photo-placeholder>ff2.jpg</div>';">
+      </div>
+      <div class="game-photo-frame">
+        <img src="ff3.jpeg" alt="Free Fire 3" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=photo-placeholder>ff3.jpg</div>';">
+      </div>
+    </div>
+
+    <div class="game-photos-grid stagger-in" id="mcPhotos" style="display: none;">
+      <div class="game-photo-frame">
+        <img src="mc1.jpeg" alt="Minecraft 1" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=photo-placeholder>mc1.jpg</div>';">
+      </div>
+      <div class="game-photo-frame">
+        <img src="mc2.jpeg" alt="Minecraft 2" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=photo-placeholder>mc2.jpg</div>';">
+      </div>
+      <div class="game-photo-frame">
+        <img src="mc3.jpeg" alt="Minecraft 3" onerror="this.style.display='none'; this.parentElement.innerHTML='<div class=photo-placeholder>mc3.jpg</div>';">
+      </div>
+    </div>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="var(--pink)" style="opacity: 0.3;"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+      <div class="divider-line"></div>
+    </div>
+
+    <p style="color: var(--text-light); font-style: italic; max-width: 400px; text-align: center;" id="gamePhotosCaption"></p>
+
+    <button class="btn-continue" onclick="goToStep(5)">Seguir</button>
+  </div>
+
+  <div class="step" id="step5">
+    <div class="section-intro">
+      <span class="section-step-num">Paso 5 de 8</span>
+      <span class="ribbon"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" style="color: var(--pink);"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg> Desde mi corazon</span>
+    </div>
+
+    <h2 class="cursive glow-text" style="font-size: 2.3rem; color: var(--pink); margin-bottom: 0.5rem;">Algo que quiero decirte...</h2>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span style="color: var(--pink); opacity: 0.4;">&#10084;</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="long-text-box">
+      <span class="letter-deco tl">&#10084;</span>
+      <span class="letter-deco br">&#10084;</span>
+
+      <p id="longPersonalText" style="color: var(--text); line-height: 2; font-size: 1.05rem; text-align: center;">
+        Primero que nada mi amor, lo siento muchote, se que hice muchas cosas malas, actue mal, y pues por eso mismo me voy a arrodillar para pedirte perdon,
+        gracias por estar conmigo a pesar de haber sido un completo idiota, te amo y quiero mucho mi vida:( eres lo mas lindo y siempre seras lo mas lindo.
+
+        Gracias por todo mi cielito, mereces el mundo entero y prometo ser yo el que te lo de
+      </p>
+
+      <div class="divider" style="margin: 1rem auto; max-width: 200px;">
+        <div class="divider-line"></div>
+        <span class="mini-heart">&#10084;</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <p style="color: var(--pink); font-weight: 600; font-size: 0.95rem; font-style: italic;">Con todo mi amor, para ti</p>
+    </div>
+
+    <button class="btn-continue" onclick="goToStep(6)" style="margin-top: 1.5rem;">Continuar</button>
+  </div>
+
+  <div class="step" id="step6">
+    <div class="section-intro">
+      <span class="section-step-num">Paso 6 de 8</span>
+      <span class="ribbon">&#128197; Nuestra cita</span>
+    </div>
+
+    <div class="orbit-container" style="width: 90px; height: 90px; margin-bottom: 0.5rem;">
+      <div class="orbit-ring" style="width: 85px; height: 85px; animation-duration: 12s;">
+        <div class="orbit-dot" style="top: -4px; left: 50%; background: var(--gold);"></div>
+      </div>
+      <svg class="heart-svg heartbeat" width="50" height="50" viewBox="0 0 24 24" fill="#e8336a">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+    </div>
+
+    <h2 class="cursive glow-text" style="font-size: 2.2rem; color: var(--pink); margin-bottom: 0.25rem;">Una cita especial</h2>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span style="color: var(--pink); opacity: 0.4;">&#10022;</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <p style="color: var(--text-light); margin-bottom: 1rem; font-size: 1.05rem;">25 de Febrero, solo tu y yo <span class="mini-heart">&#10084;</span></p>
+
+    <div class="card" style="padding: 2rem;">
+      <div style="display: flex; flex-direction: column; gap: 0.25rem; margin-bottom: 1.25rem;">
+        <div class="date-detail">
+          <span class="date-detail-icon">&#128197;</span>
+          <span><strong>Fecha:</strong> 25 de Febrero</span>
+        </div>
+        <div class="date-detail">
+          <span class="date-detail-icon">&#128336;</span>
+          <span><strong>Hora:</strong>Toda la noche</span>
+        </div>
+        <div class="date-detail">
+          <span class="date-detail-icon">&#128205;</span>
+          <span><strong>Lugar:</strong>Yo casita, Tu casita, Y videollamadita</span>
+        </div>
+      </div>
+
+      <div class="divider" style="margin: 0.75rem auto; max-width: 200px;">
+        <div class="divider-line"></div>
+        <span style="color: var(--pink); opacity: 0.4; font-size: 0.7rem;">&#10084;</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <h3 style="font-size: 1.2rem; font-weight: 700; margin-bottom: 0.25rem;">Que quieres comer mi amor?</h3>
+      <p style="color: var(--text-light); font-size: 0.9rem; margin-bottom: 1rem;">Elige o escribe lo que tu quieras</p>
+
+      <div class="food-suggestions" id="foodSuggestions">
+        <button class="food-chip" onclick="selectFood(this, 'Pizza')">&#127829; Pizza</button>
+        <button class="food-chip" onclick="selectFood(this, 'Sushi')">&#127843; Sushi</button>
+        <button class="food-chip" onclick="selectFood(this, 'Hamburguesas')">&#127828; Hamburguesas</button>
+        <button class="food-chip" onclick="selectFood(this, 'Tacos')">&#127790; Tacos</button>
+        <button class="food-chip" onclick="selectFood(this, 'Pasta')">&#127837; Pasta</button>
+        <button class="food-chip" onclick="selectFood(this, 'Pollo frito')">&#127831; Pollo frito</button>
+      </div>
+
+      <p style="color: var(--text-light); font-size: 0.85rem; margin: 0.75rem 0 0.5rem;">o escribe lo que quieras:</p>
+      <input type="text" class="food-input" id="foodInput" placeholder="Tu comida favorita..." oninput="onFoodType(this.value)">
+      <div class="food-reaction" id="foodReaction"></div>
+    </div>
+
+    <div style="display: flex; gap: 1.5rem; align-items: center; margin-top: 1.5rem; flex-wrap: wrap; justify-content: center;">
+      <button class="btn-yes" id="btnDateYes" onclick="handleAcceptDate()" style="display: none;">Acepto la cita!</button>
+      <button class="btn-no" id="btnDateNo" onmouseenter="runAwayDate()" ontouchstart="runAwayDate()" onclick="runAwayDate()" style="display: none;">No quiero</button>
+    </div>
+  </div>
+
+  <div class="step" id="step7">
+    <div id="confettiContainer" class="confetti-container"></div>
+    <div class="stars-container" id="step7Stars"></div>
+
+    <div class="section-intro">
+      <span class="section-step-num">Paso final</span>
+      <span class="ribbon" style="background: linear-gradient(135deg, rgba(232,51,106,0.15), rgba(255,213,79,0.15));"><span class="mini-heart">&#10084;</span> Nuestro plan perfecto</span>
+    </div>
+
+    <div class="orbit-container" style="width: 120px; height: 120px; margin-bottom: 0.5rem;">
+      <div class="orbit-ring" style="width: 115px; height: 115px;">
+        <div class="orbit-dot" style="top: -4px; left: 50%;"></div>
+      </div>
+      <div class="orbit-ring" style="width: 140px; height: 140px; animation-direction: reverse; animation-duration: 12s;">
+        <div class="orbit-dot" style="top: 50%; right: -4px; background: var(--gold);"></div>
+        <div class="orbit-dot" style="bottom: -4px; left: 30%;"></div>
+      </div>
+      <svg class="heart-svg heartbeat" width="70" height="70" viewBox="0 0 24 24" fill="#e8336a">
+        <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+      </svg>
+    </div>
+
+    <h2 class="cursive glow-text" style="font-size: 2.5rem; color: var(--pink); margin-bottom: 0.5rem; text-wrap: balance; text-align: center;">
+      Nuestro plan perfecto
+    </h2>
+
+    <div class="divider">
+      <div class="divider-line"></div>
+      <span style="color: var(--gold); font-size: 0.9rem;">&#10022;</span>
+      <div class="divider-line"></div>
+    </div>
+
+    <div class="love-letter" id="finalLetter" style="margin-bottom: 1.5rem;">
+      <div class="letter-border-glow"></div>
+      <span class="letter-deco tl">&#10084;</span>
+      <span class="letter-deco tr">&#10047;</span>
+      <span class="letter-deco bl">&#10047;</span>
+      <span class="letter-deco br">&#10084;</span>
+
+      <div class="message-line" data-delay="400" style="font-size: 1.25rem; font-weight: 700; color: var(--pink);">Eres la persona que mas he amado en mi vida</div>
+      <div class="message-line" data-delay="1600" style="margin-top: 0.6rem;">Y no miento mi amor, estoy tan enamorado</div>
+      <div class="message-line" data-delay="2800" style="margin-top: 0.6rem;">Y solo quiero estar a tu lado mi bebe</div>
+      <div class="message-line" data-delay="4000" style="margin-top: 0.6rem;">Yo quiero estar contigo siempre:(</div>
+      <div class="message-line" data-delay="5200" style="margin-top: 0.6rem;">Quiero vivir mi vida contigo</div>
+      <div class="message-line" data-delay="6400" style="margin-top: 0.75rem; font-weight: 700; color: var(--pink); font-size: 1.15rem;">Te amo demasiado mi bebe, quiero casarme contigo <span class="mini-heart">&#10084;</span></div>
+    </div>
+
+    <div id="summarySection" style="display: none;">
+      <h3 style="font-weight: 700; font-size: 1.1rem; margin-bottom: 0.5rem; text-align: center;">Nuestro plan:</h3>
+      <div class="summary-grid" id="summaryGrid">
+        <div class="summary-card">
+          <div style="font-size: 2rem;">&#127918;</div>
+          <h3 style="font-weight: 700; margin: 0.25rem 0;" id="summaryGame">--</h3>
+          <p style="color: var(--text-light); font-size: 0.8rem;">Toda la noche!</p>
+        </div>
+        <div class="summary-card">
+          <div style="font-size: 2rem;">&#127869;</div>
+          <h3 style="font-weight: 700; margin: 0.25rem 0;">Cita el 25</h3>
+          <p style="color: var(--text-light); font-size: 0.8rem;" id="summaryFood">A comer juntos</p>
+        </div>
+        <div class="summary-card">
+          <div style="font-size: 2rem; animation: heartbeat 1.5s ease-in-out infinite;">&#10084;&#65039;</div>
+          <h3 style="font-weight: 700; margin: 0.25rem 0;">Siempre</h3>
+          <p style="color: var(--text-light); font-size: 0.8rem;">Amarte por siempre</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="promisesSection" style="display: none; max-width: 450px; width: 100%; margin-top: 1rem;">
+      <div class="card" style="text-align: left; padding: 1.5rem 2rem;">
+        <h3 style="text-align: center; font-weight: 700; color: var(--pink); margin-bottom: 0.75rem;">Mis promesas para ti:</h3>
+        <div style="display: flex; flex-direction: column; gap: 0.6rem;">
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--pink)"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span>Amarte cada dia mas, y cada dia mas tuyo</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--pink)"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span>Hacerte sonreir siempre, ademas me encanta escuchar tu sonrisa</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--pink)"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span>Estar contigo en las buenas y en las malas, siempre juntitos</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--pink)"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span>Nunca dejarte sola, quiero ser lo mejor para ti</span>
+          </div>
+          <div style="display: flex; align-items: center; gap: 0.6rem;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="var(--pink)"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+            <span>Ser mejor persona por ti, pote quiero ser yo siempre</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div id="finalClose" style="display: none; text-align: center; margin-top: 1.5rem;">
+      <div class="divider" style="margin: 0 auto 1rem; max-width: 200px;">
+        <div class="divider-line"></div>
+        <span style="color: var(--gold); font-size: 0.9rem;">&#10022;</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <p class="cursive glow-text" style="font-size: 2.2rem; color: var(--pink); margin-bottom: 0.5rem;">Por siempre tuyo, mi amor</p>
+      <p style="color: var(--text-light); font-size: 0.95rem;">Gracias por ser la persona mas hermosa de mi vida</p>
+
+      <div class="divider" style="margin: 1rem auto; max-width: 150px;">
+        <div class="divider-line"></div>
+        <span class="mini-heart" style="font-size: 1rem;">&#10084;</span>
+        <div class="divider-line"></div>
+      </div>
+
+      <div style="animation: floatGentle 3s ease-in-out infinite;">
+        <svg class="heart-svg" width="50" height="50" viewBox="0 0 24 24" fill="#e8336a" style="opacity: 0.7; filter: drop-shadow(0 0 8px rgba(232,51,106,0.4));">
+          <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+        </svg>
+      </div>
+
+      <p style="color: var(--text-light); font-size: 0.85rem; margin-top: 0.75rem; font-style: italic;">Hecho con todo el amor del mundo</p>
+    </div>
+  </div>
+
+  <script>
+    let currentStep = 0;
+    const totalSteps = 8;
+    let chosenGame = '';
+    let chosenFood = '';
+    let noAttempts = 0;
+    let noDateAttempts = 0;
+    let yesBtnScale = 1;
+
+    const nicknames = ['Mi vida...', 'Mi cielo...', 'Mi todo...', 'Mi princesa...', 'Mi amor...', 'Mi cosita linda...', 'Mi reina...', 'Hermosa...'];
+    let nickIndex = 0;
+
+    const noTexts = [
+      'No', 'Segura?', 'Piensalo bien...', 'Di que si!',
+      'No es opcion!', 'Ni lo intentes', 'Rindete y di que si!',
+      'JAMAS podras!', 'Imposible!', 'El Si te espera!', 'Ya casi!', 'Dale porfa!'
+    ];
+
+    const noDateTexts = [
+      'No quiero', 'Segura?', 'Sera divertido!',
+      'Di que si!', 'No puedes decir no!', 'JAMAS!', 'Ya rindete!', 'Acepta mi amor!'
+    ];
+
+    const foodReactions = {
+      'Pizza': 'Mmm, Pizza suena perfecto para nuestra cita!',
+      'Sushi': 'Sushi! Que fancy, mi amor!',
+      'Hamburguesas': 'Unas buenas hamburguesas juntos!',
+      'Tacos': 'Taquitos! Me encanta la idea!',
+      'Pasta': 'Pasta, que romantico mi amor!',
+      'Pollo frito': 'Pollo frito! Delicioso!'
+    };
+    createFloatingHearts();
+    createStarsInElement('step0Stars', 30);
+    updateProgress();
+    startNicknameRotation();
+
+    function createFloatingHearts() {
+      const container = document.getElementById('heartsContainer');
+      for (let i = 0; i < 25; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        const size = 12 + Math.random() * 22;
+        const colors = ['#e8336a', '#f48fb1', '#ff80ab', '#f8bbd0'];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        heart.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.animationDuration = (7 + Math.random() * 10) + 's';
+        heart.style.animationDelay = Math.random() * 12 + 's';
+        heart.style.opacity = 0.15 + Math.random() * 0.35;
+        container.appendChild(heart);
+      }
+    }
+
+    function createStarsInElement(elementId, count) {
+      const container = document.getElementById(elementId);
+      if (!container) return;
+      for (let i = 0; i < count; i++) {
+        const star = document.createElement('div');
+        star.className = 'star';
+        star.style.left = Math.random() * 100 + '%';
+        star.style.top = Math.random() * 100 + '%';
+        star.style.animationDuration = (1.5 + Math.random() * 3) + 's';
+        star.style.animationDelay = Math.random() * 3 + 's';
+        const size = 3 + Math.random() * 4;
+        star.style.width = size + 'px';
+        star.style.height = size + 'px';
+        if (Math.random() > 0.5) star.style.background = 'var(--gold)';
+        container.appendChild(star);
+      }
+    }
+
+    function updateProgress() {
+      const prog = document.getElementById('progress');
+      prog.innerHTML = '';
+      for (let i = 0; i < totalSteps; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'dot';
+        if (i === currentStep) dot.classList.add('active');
+        else if (i < currentStep) dot.classList.add('done');
+        prog.appendChild(dot);
+      }
+    }
+
+    function startNicknameRotation() {
+      setInterval(() => {
+        nickIndex = (nickIndex + 1) % nicknames.length;
+        const el = document.getElementById('nicknameLabel');
+        if (el) {
+          el.style.opacity = '0';
+          setTimeout(() => {
+            el.textContent = nicknames[nickIndex];
+            el.style.opacity = '1';
+          }, 300);
+        }
+      }, 3000);
+    }
+
+    function goToStep(step) {
+      document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+      document.getElementById('step' + step).classList.add('active');
+      currentStep = step;
+      updateProgress();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      if (step === 2) animateLoveMessage('loveLetter', 'btnLoveContinue');
+      if (step === 4) showGamePhotos();
+      if (step === 7) {
+        createStarsInElement('step7Stars', 40);
+        animateFinalStep();
+      }
+    }
+
+    function handleYes() {
+      burstHearts();
+      setTimeout(() => goToStep(1), 500);
+    }
+
+    function runAway() {
+      const btn = document.getElementById('btnNo');
+      const maxX = window.innerWidth - btn.offsetWidth - 20;
+      const maxY = window.innerHeight - btn.offsetHeight - 80;
+      const x = 20 + Math.random() * (maxX - 20);
+      const y = 20 + Math.random() * (maxY - 20);
+      btn.style.position = 'fixed';
+      btn.style.left = x + 'px';
+      btn.style.top = y + 'px';
+      btn.style.zIndex = '50';
+
+      noAttempts++;
+      btn.textContent = noTexts[Math.min(noAttempts, noTexts.length - 1)];
+
+      yesBtnScale += 0.07;
+      const yesBtn = document.getElementById('btnYes');
+      yesBtn.style.transform = `scale(${Math.min(yesBtnScale, 1.8)})`;
+      if (noAttempts >= 3) yesBtn.textContent = 'SIIII!';
+      if (noAttempts >= 6) yesBtn.textContent = 'OBVIO QUE SI!';
+      if (noAttempts >= 9) yesBtn.textContent = 'DALE CLICK AQUI MI AMOR!';
+
+      const counter = document.getElementById('noCounter');
+      counter.style.opacity = '1';
+      counter.textContent = `Intentos de decir no: ${noAttempts} (jamas lo lograras!)`;
+    }
+
+    function animateLoveMessage(containerId, btnId) {
+      const container = document.getElementById(containerId);
+      const lines = container.querySelectorAll('.message-line');
+      lines.forEach((line) => {
+        const delay = parseInt(line.getAttribute('data-delay')) || 0;
+        setTimeout(() => line.classList.add('visible'), delay);
+      });
+      const maxDelay = Math.max(...Array.from(lines).map(l => parseInt(l.getAttribute('data-delay')) || 0));
+      setTimeout(() => {
+        if (btnId) {
+          const btn = document.getElementById(btnId);
+          if (btn) {
+            btn.style.display = 'inline-block';
+            btn.classList.add('bounce-in');
+          }
+        }
+      }, maxDelay + 800);
+    }
+
+    function selectGame(game) {
+      chosenGame = game;
+      document.getElementById('cardFF').classList.toggle('selected', game === 'ff');
+      document.getElementById('cardMC').classList.toggle('selected', game === 'mc');
+      document.getElementById('ffReact').style.display = game === 'ff' ? 'block' : 'none';
+      document.getElementById('mcReact').style.display = game === 'mc' ? 'block' : 'none';
+
+      const msg = document.getElementById('gameSelectedMsg');
+      if (game === 'ff') {
+        msg.textContent = 'Free Fire! Vamos a ganar juntos, tu y yo contra todos!';
+      } else {
+        msg.textContent = 'Minecraft! Vamos a construir nuestro mundo perfecto!';
+      }
+
+      const btn = document.getElementById('btnGameContinue');
+      btn.style.display = 'inline-block';
+      btn.classList.add('bounce-in');
+    }
+
+    function showGamePhotos() {
+      if (chosenGame === 'ff') {
+        document.getElementById('ffPhotos').style.display = 'grid';
+        document.getElementById('mcPhotos').style.display = 'none';
+        document.getElementById('gamePhotosTitle').textContent = 'Nuestras noches de Free Fire';
+        document.getElementById('gamePhotosSub').textContent = 'Squad imparable!';
+        document.getElementById('gamePhotosCaption').textContent = 'Cada victoria es mejor contigo a mi lado';
+        document.getElementById('gamePhotosRibbon').innerHTML = '&#127918; Free Fire';
+      } else {
+        document.getElementById('ffPhotos').style.display = 'none';
+        document.getElementById('mcPhotos').style.display = 'grid';
+        document.getElementById('gamePhotosTitle').textContent = 'Nuestro mundo en Minecraft';
+        document.getElementById('gamePhotosSub').textContent = 'Construyendo juntos!';
+        document.getElementById('gamePhotosCaption').textContent = 'Nuestro mundito, ladrillo a ladrillo, con amor';
+        document.getElementById('gamePhotosRibbon').innerHTML = '&#9935; Minecraft';
+      }
+    }
+
+    function selectFood(chip, food) {
+      chosenFood = food;
+      document.querySelectorAll('.food-chip').forEach(c => c.classList.remove('selected'));
+      chip.classList.add('selected');
+      document.getElementById('foodInput').value = food;
+      document.getElementById('foodReaction').textContent = foodReactions[food] || 'Buena eleccion mi amor!';
+      showDateButtons();
+    }
+
+    function onFoodType(value) {
+      chosenFood = value;
+      document.querySelectorAll('.food-chip').forEach(c => c.classList.remove('selected'));
+      if (value.trim().length > 0) {
+        document.getElementById('foodReaction').textContent = 'Mmm, ' + value + ' suena perfecto para nuestra cita!';
+        showDateButtons();
+      } else {
+        document.getElementById('foodReaction').textContent = '';
+        document.getElementById('btnDateYes').style.display = 'none';
+        document.getElementById('btnDateNo').style.display = 'none';
+      }
+    }
+
+    function showDateButtons() {
+      const yes = document.getElementById('btnDateYes');
+      const no = document.getElementById('btnDateNo');
+      yes.style.display = 'inline-block';
+      no.style.display = 'inline-block';
+      yes.classList.add('bounce-in');
+    }
+
+    function runAwayDate() {
+      const btn = document.getElementById('btnDateNo');
+      const maxX = window.innerWidth - btn.offsetWidth - 20;
+      const maxY = window.innerHeight - btn.offsetHeight - 80;
+      btn.style.position = 'fixed';
+      btn.style.left = (20 + Math.random() * (maxX - 20)) + 'px';
+      btn.style.top = (20 + Math.random() * (maxY - 20)) + 'px';
+      btn.style.zIndex = '50';
+      noDateAttempts++;
+      btn.textContent = noDateTexts[Math.min(noDateAttempts, noDateTexts.length - 1)];
+    }
+
+    function handleAcceptDate() {
+      burstHearts();
+      setTimeout(() => goToStep(7), 500);
+    }
+
+    function animateFinalStep() {
+      launchConfetti();
+      animateLoveMessage('finalLetter', null);
+
+      const lines = document.getElementById('finalLetter').querySelectorAll('.message-line');
+      const maxDelay = Math.max(...Array.from(lines).map(l => parseInt(l.getAttribute('data-delay')) || 0));
+
+      setTimeout(() => {
+        const gameName = chosenGame === 'ff' ? 'Free Fire' : 'Minecraft';
+        document.getElementById('summaryGame').textContent = gameName;
+        document.getElementById('summaryFood').textContent = 'A comer ' + chosenFood;
+        document.getElementById('summarySection').style.display = 'block';
+        document.getElementById('summarySection').classList.add('bounce-in');
+      }, maxDelay + 1200);
+
+      setTimeout(() => {
+        document.getElementById('promisesSection').style.display = 'block';
+        document.getElementById('promisesSection').classList.add('bounce-in');
+      }, maxDelay + 2200);
+
+      setTimeout(() => {
+        document.getElementById('finalClose').style.display = 'block';
+        document.getElementById('finalClose').classList.add('bounce-in');
+        // Second wave of confetti
+        launchConfetti();
+      }, maxDelay + 3500);
+    }
+
+    function launchConfetti() {
+      const container = document.getElementById('confettiContainer');
+      const colors = ['#e8336a', '#f48fb1', '#ff80ab', '#e86833', '#ffd54f', '#ef5350', '#f8bbd0'];
+      const shapes = ['circle', 'square', 'heart'];
+      for (let i = 0; i < 100; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece';
+        piece.style.left = Math.random() * 100 + '%';
+        piece.style.background = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDuration = (2.5 + Math.random() * 3.5) + 's';
+        piece.style.animationDelay = Math.random() * 2.5 + 's';
+
+        const shape = shapes[Math.floor(Math.random() * shapes.length)];
+        const size = 6 + Math.random() * 10;
+        piece.style.width = size + 'px';
+        piece.style.height = size + 'px';
+
+        if (shape === 'circle') {
+          piece.style.borderRadius = '50%';
+        } else if (shape === 'heart') {
+          piece.style.background = 'none';
+          piece.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${colors[Math.floor(Math.random() * colors.length)]}"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
+        } else {
+          piece.style.borderRadius = '2px';
+        }
+
+        container.appendChild(piece);
+      }
+    }
+
+    function burstHearts() {
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.className = 'floating-heart';
+        heart.style.position = 'fixed';
+        heart.style.left = (30 + Math.random() * 40) + '%';
+        heart.style.bottom = '35%';
+        heart.style.zIndex = '99';
+        heart.style.opacity = '0.9';
+        const size = 14 + Math.random() * 20;
+        const colors = ['#e8336a', '#f48fb1', '#ff80ab'];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        heart.innerHTML = `<svg width="${size}" height="${size}" viewBox="0 0 24 24" fill="${color}"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>`;
+        heart.style.animationDuration = (1.5 + Math.random() * 2) + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+      }
+    }
+  </script>
+</body>
+</html>
