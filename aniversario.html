@@ -62,7 +62,7 @@
             margin-bottom: 10px;
         }
 
-        /* Ocultar el contenedor principal inicialmente para evitar parpadeos */
+        /* Contenedor principal */
         #main-content {
             display: none;
             width: 100%;
@@ -245,7 +245,7 @@
 
         /* --- SOBRES DE CARTAS --- */
         .letters-section { width: 100%; margin-bottom: 60px; text-align: center; }
-        .section-headline { font-family: 'Cinzel', serif; font-size: 1.6rem; color: var(--deep-rose); margin-bottom: 40px; letter-spacing: 2px; font-weight: 600; }
+        .section-headline { font-family: 'Cinzel', serif; font-size: 1.6rem; color: var(--deep-rose); margin-bottom: 35px; letter-spacing: 2px; font-weight: 600; }
         .letters-box-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 30px; width: 100%; }
         .envelope-card { background: var(--lily-cream); border-radius: 24px; padding: 40px 25px; border: 2px solid var(--soft-blush); box-shadow: 0 10px 30px rgba(255, 133, 161, 0.08); cursor: pointer; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative; }
         .envelope-card::before { content: '🎀'; position: absolute; top: -15px; left: calc(50% - 15px); font-size: 1.3rem; }
@@ -256,13 +256,39 @@
         .envelope-card h3 { font-family: 'Cinzel', serif; margin: 0 0 8px 0; color: var(--deep-rose); font-size: 1.15rem; letter-spacing: 1px; }
         .envelope-card p { font-size: 0.85rem; color: #8c6a70; margin: 0; }
 
-        /* --- GALERÍA POLAROID --- */
+        /* --- NUEVA SECCIÓN: MINI JUEGO / TRIVIA --- */
+        .game-section {
+            width: 100%;
+            max-width: 600px;
+            background: var(--lily-cream);
+            border: 3px double var(--soft-blush);
+            border-radius: 30px;
+            padding: 35px;
+            box-sizing: border-box;
+            box-shadow: 0 15px 40px rgba(255, 133, 161, 0.12);
+            margin-bottom: 60px;
+            text-align: center;
+        }
+        .quiz-container { margin-top: 25px; }
+        .quiz-question { font-size: 1.1rem; font-weight: 500; margin-bottom: 20px; color: var(--text-dark); }
+        .quiz-options { display: flex; flex-direction: column; gap: 12px; }
+        .btn-option {
+            background: var(--bg-pink); border: 1px solid var(--soft-blush);
+            padding: 14px 20px; border-radius: 15px; font-family: 'Poppins', sans-serif;
+            font-size: 0.95rem; cursor: pointer; color: var(--text-dark); transition: all 0.25s ease;
+            font-weight: 500;
+        }
+        .btn-option:hover { background: var(--soft-blush); border-color: var(--rose-accent); transform: scale(1.01); }
+        .quiz-feedback { margin-top: 15px; font-weight: 600; font-size: 0.95rem; height: 25px; }
+        .quiz-progress { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; color: var(--rose-accent); margin-bottom: 10px; font-weight: 600; }
+        
+        /* --- NUEVA SECCIÓN: GALERÍA POLAROID EN CUADRÍCULA --- */
         .gallery-section { width: 100%; margin-bottom: 60px; text-align: center; }
-        .photo-polaroid-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 35px; }
-        .polaroid-pink-frame { background: var(--lily-cream); padding: 16px 16px 35px 16px; border-radius: 12px; box-shadow: 0 15px 35px rgba(255, 133, 161, 0.1); border: 1px solid var(--soft-blush); transition: transform 0.3s ease; position: relative; }
-        .polaroid-pink-frame::before { content: '🤍'; position: absolute; top: -10px; left: calc(50% - 10px); font-size: 1.5rem; }
+        .photo-polaroid-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 35px; width: 100%; margin-top: 20px; }
+        .polaroid-pink-frame { background: var(--lily-cream); padding: 16px 16px 30px 16px; border-radius: 12px; box-shadow: 0 12px 30px rgba(255, 133, 161, 0.1); border: 1px solid var(--soft-blush); transition: transform 0.3s ease; position: relative; box-sizing: border-box; }
+        .polaroid-pink-frame::before { content: '🤍'; position: absolute; top: -12px; left: calc(50% - 12px); font-size: 1.4rem; filter: drop-shadow(0 2px 3px rgba(0,0,0,0.05)); }
         .polaroid-pink-frame:hover { transform: scale(1.04) rotate(-1deg); box-shadow: 0 20px 45px rgba(255, 133, 161, 0.2); border-color: var(--rose-accent); }
-        .img-container { width: 100%; height: 280px; background: var(--bg-pink); overflow: hidden; border-radius: 6px; border: 1px solid rgba(255, 204, 213, 0.5); }
+        .img-container { width: 100%; height: 240px; background: var(--bg-pink); overflow: hidden; border-radius: 6px; border: 1px solid rgba(255, 204, 213, 0.5); }
         .img-container img { width: 100%; height: 100%; object-fit: cover; }
         .polaroid-caption { font-family: 'Alex Brush', cursive; font-size: 2.2rem; margin-top: 15px; color: var(--deep-rose); line-height: 1; }
 
@@ -330,7 +356,6 @@
                 <div class="envelope-card" onclick="viewLetter(1)">
                     <div class="envelope-icon">✉️</div>
                     <h3>Carta de Rosas</h3>
-                    
                 </div>
                 <div class="envelope-card" onclick="viewLetter(2)">
                     <div class="envelope-icon">✉️</div>
@@ -343,30 +368,70 @@
             </div>
         </section>
 
-        <div id="raw-letters-storage" style="display: none;">
+        <section class="game-section">
+            <h2 class="section-headline" style="margin-bottom: 10px;">🧩 ¿Cuánto Nos Conoces? 🧸</h2>
+            <p style="font-size: 0.85rem; color: #8c6a70; margin: 0 0 20px 0;">Responde correctamente para liberar un mensajito especial</p>
             
+            <div class="quiz-container" id="quiz-box">
+                <div class="quiz-progress" id="quiz-progress">Pregunta 1 de 3</div>
+                <div class="quiz-question" id="quiz-question">Cargando pregunta...</div>
+                <div class="quiz-options" id="quiz-options">
+                    </div>
+                <div class="quiz-feedback" id="quiz-feedback"></div>
+            </div>
+        </section>
+
+        <section class="gallery-section">
+            <h2 class="section-headline">📸 Momentos Inolvidables 🗺️</h2>
+            <div class="photo-polaroid-grid">
+                
+                <div class="polaroid-pink-frame">
+                    <div class="img-container">
+                        <img src="foto1.jpg" alt="Momento Juntos 1" onerror="this.src='https://placehold.co/400x400/ffccd5/4a282e?text=Nuestra+Foto+❤️'">
+                    </div>
+                    <div class="polaroid-caption">Cuando sonríes...</div>
+                </div>
+
+                <div class="polaroid-pink-frame">
+                    <div class="img-container">
+                        <img src="foto2.jpg" alt="Momento Juntos 2" onerror="this.src='https://placehold.co/400x400/ffccd5/4a282e?text=Día+Especial+✨'">
+                    </div>
+                    <div class="polaroid-caption">Mi lugar favorito</div>
+                </div>
+
+                <div class="polaroid-pink-frame">
+                    <div class="img-container">
+                        <img src="foto3.jpg" alt="Momento Juntos 3" onerror="this.src='https://placehold.co/400x400/ffccd5/4a282e?text=Para+Siempre+🌷'">
+                    </div>
+                    <div class="polaroid-caption">Tú y yo siempre</div>
+                </div>
+
+            </div>
+        </section>
+
+        <div id="raw-letters-storage" style="display: none;">
             <div id="raw-letter-1" data-title="🌹 Carta de Rosas">
                Hola mi amor hermosa, esta es la primera carta, me acuerdo de lo lindo que fue conocerte, de lo lindo que lo pasamos, y se que, en mas de 1 año de relacion, tuve errores, y de verdad lo siento mucho mi amorcito
 
-                Dia a dia quiero mejorar mi persona, ser mejor novio para ti, enfocarme en vivir mi vida a tus pies, pienso mucho en que nuestra boda sea inolvidable, sea perfecta
+               Dia a dia quiero mejorar mi persona, ser mejor novio para ti, enfocarme en vivir mi vida a tus pies, pienso mucho en que nuestra boda sea inolvidable, sea perfecta
 
-                Yo te amo mi Helen, entrego mi alma, mi corazon, me entrego totalmente, a ti <3
+               Yo te amo mi Helen, entrego mi alma, mi corazon, me entrego totalmente, a ti <3
 
-                Hoy declaro mi amor, hoy me entrego a ti, hoy 25 de junio del 2026, solo pienso en mi futuro contigo, hoy soy tuyo para toda la vida mi amor, te amo demasiado
+               Hoy declaro mi amor, hoy me entrego a ti, hoy 25 de junio del 2026, solo pienso en mi futuro contigo, hoy soy tuyo para toda la vida mi amor, te amo demasiado
             </div>
 
             <div id="raw-letter-2" data-title="Carta de Lirios">
                Mi amor hermosa, y mi princesa hermosa, te adoro demasiado, espero te encante el ramo de flores que te di, con tus 3 flores favoritas, porque mi amor por ti es muy grande
 
-                Eres la persona mas importante de mi vida, la que llena mi vida de felicidad, amor, cariño, de todo sabes mi vida
+               Eres la persona mas importante de mi vida, la que llena mi vida de felicidad, amor, cariño, de todo sabes mi vida
 
-                Agradezco mucho a Dios por tenerme a tu lado y hacerme mejor persona para ti, ser un mejor novio, todo lo que te prometi
+               Agradezco mucho a Dios por tenerme a tu lado y hacerme mejor persona para ti, ser un mejor novio, todo lo que te prometi
 
-                Por muchos mas añitos juntitos mi vida, por un mundo donde siempre seas tu mi amorrrrr
+               Por muchos mas añitos juntitos mi vida, por un mundo donde siempre seas tu mi amorrrrr
             </div>
 
             <div id="raw-letter-3" data-title="🏵️ Carta de Gerberas">
-             Dicen que el significado de las gerberas, dependen de la cantidad que se entreguen, 2 gerberas, significa nuestra union, nuestro amor
+              Dicen que el significado de las gerberas, dependen de la cantidad que se entreguen, 2 gerberas, significa nuestra union, nuestro amor
                 El equilibrio y la union de nuestros corazones mi amor, el amor y ternura que nos tenemos
 
                 Pero este ramo posee mas significados, 3 flores que se complementan una de la otra pero principalmente es amor, cariño, es lo lindo
@@ -387,8 +452,8 @@
 
                 Te amo demasiado mi helen, disfruta tu regalito, todos los que te he dado, te mereces eso y muchisisimo mas mi amor <3
             </div>
-
         </div>
+
         <footer class="footer-action">
             <a href="index.html" class="btn-coquette-back">← VOLVER AL MENÚ</a>
         </footer>
@@ -403,29 +468,23 @@
     </div>
 
     <script>
-        // --- CONTROL EXCLUSIVO DE ACCESO (CUENTA REGRESIVA PARA MAÑANA EL 25 A LAS 3PM) ---
+        // --- CONTROL EXCLUSIVO DE ACCESO ---
         function checkAccess() {
             const now = new Date();
-            
-            // Evaluamos el desfase horario del dispositivo (en minutos)
-            // Venezuela es UTC-4 (240 min). México Centro es UTC-6 (360 min).
             const offset = now.getTimezoneOffset();
 
-            // Si eres tú desde Venezuela pasas directo siempre
+            // Acceso directo si eres tú desde tu zona horaria local
             if (offset <= 240) {
                 unlockPage();
                 return;
             }
 
-            // Fecha y hora objetivo fija: 25 de Junio a las 3:00 PM (Hora 15:00)
             const target = new Date(now.getFullYear(), 5, 25, 15, 0, 0); 
             const diff = target - now;
 
-            // Si ya pasó la fecha y hora objetivo, Helen puede entrar libremente
             if (diff <= 0) {
                 unlockPage();
             } else {
-                // Sigue bloqueado, calculamos los días, horas, minutos y segundos restantes
                 const d = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
@@ -447,10 +506,8 @@
             document.getElementById('main-content').style.display = 'flex';
         }
 
-        // Ejecutar revisión continua cada segundo
         setInterval(checkAccess, 1000);
         checkAccess();
-
 
         // --- EFECTO MÁGICO DE DESTELLOS ---
         document.addEventListener('mousemove', function(e) {
@@ -479,7 +536,7 @@
         }
         setInterval(dropPinkItems, 400);
 
-        // --- CONTADOR TOTAL (DESDE EL 25 DE DICIEMBRE DE 2024) ---
+        // --- CONTADOR TOTAL ---
         const startLoveDate = new Date(2024, 11, 25, 0, 0, 0); 
         function calculateTime() {
             const now = new Date();
@@ -501,7 +558,7 @@
             alert("💭✨ Cierra los ojos por un segundo al lado de Brandon💖🧸🌸");
         }
 
-        // --- VISOR DE CARTAS DESDE HTML ---
+        // --- VISOR DE CARTAS ---
         const letterViewModal = document.getElementById('textLetterModal');
         const titleSlot = document.getElementById('paperTitleSlot');
         const contentSlot = document.getElementById('paperContentSlot');
@@ -519,6 +576,85 @@
         function closeLetterView() { 
             letterViewModal.classList.remove('open'); 
         }
+
+        // --- SISTEMA DEL MINI TEST / TRIVIA DE AMOR ---
+        // Puedes cambiar las preguntas, opciones o la respuesta correcta (índice base 0) de manera muy sencilla aquí:
+        const quizData = [
+            {
+                question: "¿En qué fecha exacta comenzó formalmente nuestra hermosa historia de amor?",
+                options: ["25 de Noviembre de 2024", "25 de Diciembre de 2024", "14 de Febrero de 2025"],
+                correct: 1,
+                failMsg: "¡Nopo! Haz memoria, fue en una fecha muy navideña y mágica... 🎄"
+            },
+            {
+                question: "¿Cuál de estos elementos representa el equilibrio y la unión en el ramo que te di?",
+                options: ["Los 3 lirios", "Las 12 flores completas", "Las 2 gerberas"],
+                correct: 2,
+                failMsg: "¡Cerca! Recuerda lo que te escribí en la tercera carta sobre el número 2... 🏵️"
+            },
+            {
+                question: "Si Brandon tuviera que elegir un lugar ideal para estar en este instante, ¿cuál sería?",
+                options: ["Cualquier rincón del universo, siempre que sea a tus pies", "Programando frente a la computadora", "Viendo un partido de fútbol solo"],
+                correct: 0,
+                failMsg: "¡Falso! Mi destino y mi lugar favorito en el mundo entero siempre vas a ser tú. ❤️"
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+
+        function loadQuestion() {
+            const quizBox = document.getElementById('quiz-box');
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.innerText = ""; // Limpiar mensajes anteriores
+
+            if (currentQuestionIndex < quizData.length) {
+                const currentQuiz = quizData[currentQuestionIndex];
+                document.getElementById('quiz-progress').innerText = `Pregunta ${currentQuestionIndex + 1} de ${quizData.length}`;
+                document.getElementById('quiz-question').innerText = currentQuiz.question;
+                
+                const optionsContainer = document.getElementById('quiz-options');
+                optionsContainer.innerHTML = "";
+                
+                currentQuiz.options.forEach((option, idx) => {
+                    const button = document.createElement('button');
+                    button.classList.add('btn-option');
+                    button.innerText = option;
+                    button.onclick = () => checkAnswer(idx);
+                    optionsContainer.appendChild(button);
+                });
+            } else {
+                // Al finalizar correctamente todas las preguntas se muestra este bloque definitivo:
+                quizBox.innerHTML = `
+                    <div style="font-size: 3.5rem; margin-bottom: 10px;">🏆👑💖</div>
+                    <h3 style="font-family: 'Cinzel', serif; color: var(--deep-rose); margin: 0 0 10px 0;">¡Trivia Completada con Éxito!</h3>
+                    <p style="font-size: 0.95rem; line-height: 1.6; color: var(--text-dark);">
+                        Demostraste que conoces perfectamente cada detalle de nuestra unión. El premio es saber que <b>eres la reina absoluta de mi vida</b> y que mi amor por ti crece cada segundo más. ¡Te amo infinito, Helen! 🧸🌸✨
+                    </p>
+                `;
+                // Lanzar una ráfaga intensa de corazones decorativos extra como recompensa
+                for(let i=0; i<15; i++) { setTimeout(dropPinkItems, i * 150); }
+            }
+        }
+
+        function checkAnswer(selectedIndex) {
+            const feedback = document.getElementById('quiz-feedback');
+            const currentQuiz = quizData[currentQuestionIndex];
+            
+            if (selectedIndex === currentQuiz.correct) {
+                feedback.style.color = "#2a9d8f";
+                feedback.innerText = "¡Correcto, mi amor! ✨💖 ¡Avanzamos!";
+                setTimeout(() => {
+                    currentQuestionIndex++;
+                    loadQuestion();
+                }, 1200);
+            } else {
+                feedback.style.color = "var(--deep-rose)";
+                feedback.innerText = currentQuiz.failMsg;
+            }
+        }
+
+        // Inicializar la primera pregunta del juego al cargar la página
+        loadQuestion();
     </script>
 </body>
 </html>
