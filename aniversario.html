@@ -282,7 +282,6 @@
 </head>
 <body>
 
-    <!-- PANTALLA DE BLOQUEO TEMPORAL PARA MEXICO -->
     <div id="lock-screen">
         <div class="lock-box">
             <div style="font-size: 3rem; margin-bottom: 10px;">🎀🔒🌸</div>
@@ -295,9 +294,7 @@
         </div>
     </div>
 
-    <!-- CONTENIDO PRINCIPAL SEGURO -->
     <div id="main-content">
-        <!-- Dibujitos de flores fijas -->
         <div class="corner-doodle top-left">🌸🍃</div>
         <div class="corner-doodle top-right">✨🎀</div>
         <div class="corner-doodle bottom-left">🧸🌷</div>
@@ -309,12 +306,10 @@
             <div class="subtitle">Helen 🤍 Brandon</div>
         </header>
 
-        <!-- Reproductor de YouTube -->
         <div class="youtube-container">
             <iframe width="100%" height="270" src="https://www.youtube.com/embed/nihGvpDRLtM" title="Die With A Smile" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
         </div>
 
-        <!-- Contador -->
         <div class="pink-counter-card">
             <div class="counter-caption">Cada segundo floreciendo a tu lado</div>
             <div class="grid-timer">
@@ -325,12 +320,10 @@
             </div>
         </div>
 
-        <!-- Deseos -->
         <div class="wish-section">
             <button class="btn-wish" onclick="makeAWish()">✨ Haz clic aquí y pidamos un deseo juntos ✨</button>
         </div>
 
-        <!-- Cartas -->
         <section class="letters-section">
             <h2 class="section-headline">✏️ Mis Cartas del Corazón 🪷</h2>
             <div class="letters-box-layout">
@@ -352,22 +345,38 @@
             </div>
         </section>
 
-        <!-- Galería -->
-        <section class="gallery-section">
-            <h2 class="section-headline">📸 Nuestras Memorias Lindas 💮</h2>
-            <div class="photo-polaroid-grid">
-                <div class="polaroid-pink-frame"><div class="img-container"><img src="tu-foto1.jpg" alt="Uno"></div><div class="polaroid-caption">Tu hermosa sonrisa...</div></div>
-                <div class="polaroid-pink-frame"><div class="img-container"><img src="tu-foto2.jpg" alt="Dos"></div><div class="polaroid-caption">Bajo la luz del amor</div></div>
-                <div class="polaroid-pink-frame"><div class="img-container"><img src="tu-foto3.jpg" alt="Tres"></div><div class="polaroid-caption">Abrazos infinitos</div></div>
-            </div>
-        </section>
+        <div id="raw-letters-storage" style="display: none;">
+            
+            <div id="raw-letter-1" data-title="🌹 Carta de Rosas (Nuestros Inicios)">
+                Mi amor hermosa,
 
+                Quiero recordar contigo lo mágico que fue empezar nuestra historia aquel 25 de diciembre. Fuiste, eres y serás siempre mi mejor regalo de Navidad. Desde ese primer instante supe que mi vida cambiaría por completo.
+
+                [Escribe aquí todo lo que quieras sobre vuestros inicios...]
+            </div>
+
+            <div id="raw-letter-2" data-title="🪷 Carta de Lirios (Nuestro Presente)">
+                Para mi persona favorita,
+
+                Hoy solo quiero darte las gracias por iluminar cada uno de mis días con tu amor tan puro y sincero. Estar contigo en este momento es lo más valioso que tengo, y valoro cada segundo a tu lado.
+
+                [Escribe aquí todo lo que sientes hoy por ella...]
+            </div>
+
+            <div id="raw-letter-3" data-title="🏵️ Carta de Gerberas (Nuestro Futuro)">
+                Mi vida entera,
+
+                Me emociona tanto pensar en el mañana porque sé que estás en él. Sueño con todos los bellos planes que vamos a edificar juntos, tomados de la mano, superando cualquier distancia.
+
+                [Escribe aquí todos los planes lindos que sueñas edificar...]
+            </div>
+
+        </div>
         <footer class="footer-action">
             <a href="index.html" class="btn-coquette-back">← VOLVER AL MENÚ</a>
         </footer>
     </div>
 
-    <!-- VISOR DE CARTAS -->
     <div id="textLetterModal" class="letter-modal" onclick="closeLetterView()">
         <div class="letter-paper" onclick="event.stopPropagation()">
             <span class="close-letter-btn" onclick="closeLetterView()">&times;</span>
@@ -377,8 +386,7 @@
     </div>
 
     <script>
-        // --- CONTROL EXCLUSIVO DE ACCESO (VENEZUELA VS MEXICO) ---
-        // --- CONTROL EXCLUSIVO DE ACCESO (CUENTA REGRESIVA PARA EL 25 A LAS 3PM) ---
+        // --- CONTROL EXCLUSIVO DE ACCESO (CUENTA REGRESIVA PARA MAÑANA EL 25 A LAS 3PM) ---
         function checkAccess() {
             const now = new Date();
             
@@ -392,7 +400,7 @@
                 return;
             }
 
-            // Fecha y hora objetivo: 25 de Junio a las 3:00 PM (Año actual dinámico)
+            // Fecha y hora objetivo fija: 25 de Junio a las 3:00 PM (Hora 15:00)
             const target = new Date(now.getFullYear(), 5, 25, 15, 0, 0); 
             const diff = target - now;
 
@@ -400,13 +408,12 @@
             if (diff <= 0) {
                 unlockPage();
             } else {
-                // Sigue bloqueado, calculamos los días, horas, minutos y segundos restantes para ella
+                // Sigue bloqueado, calculamos los días, horas, minutos y segundos restantes
                 const d = Math.floor(diff / (1000 * 60 * 60 * 24));
                 const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
                 const s = Math.floor((diff % (1000 * 60)) / 1000);
                 
-                // Formateamos el texto para mostrar también los días si hiciera falta, o solo horas
                 let countdownText = "";
                 if (d > 0) {
                     countdownText = `Faltan: ${d}d ${String(h).padStart(2,'0')}:${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')} ⏳🌸`;
@@ -417,6 +424,7 @@
                 document.getElementById('lock-timer').innerText = countdownText;
             }
         }
+
         function unlockPage() {
             document.getElementById('lock-screen').style.display = 'none';
             document.getElementById('main-content').style.display = 'flex';
@@ -473,26 +481,27 @@
         calculateTime();
 
         function makeAWish() {
-            alert("💭✨ Cierra los ojos por un segundo al lado de Brandon🌸");
+            alert("💭✨ Cierra los ojos por un segundo al lado de Brandon💖🧸🌸");
         }
 
-        // --- TEXTOS DE LAS CARTAS ---
-        const writtenLetters = {
-            1: { title: "🌹 Carta de Rosas (Nuestros Inicios)", content: "Mi amor Hermosa,\n\n[Brandon, escribe aquí sobre lo mágico que fue empezar vuestra historia aquel 25 de diciembre. El mejor regalo de Navidad.]" },
-            2: { title: "🪷 Carta de Lirios (Nuestro Presente)", content: "Para mi persona favorita,\n\n[Escribe aquí todo lo que sientes hoy por ella, dándole las gracias por iluminar tus días con su amor puro.]" },
-            3: { title: "🏵️ Carta de Gerberas (Nuestro Futuro)", content: "Mi vida entera,\n\n[Usa este rincón para expresarle todos los bellos planes que tú, Brandon, sueñas edificar con Helen de aquí en adelante.]" }
-        };
-
+        // --- VISOR DE CARTAS DESDE HTML ---
         const letterViewModal = document.getElementById('textLetterModal');
         const titleSlot = document.getElementById('paperTitleSlot');
         const contentSlot = document.getElementById('paperContentSlot');
 
         function viewLetter(id) {
-            titleSlot.innerText = writtenLetters[id].title;
-            contentSlot.innerText = writtenLetters[id].content;
+            const sourceLetter = document.getElementById(`raw-letter-${id}`);
+            const title = sourceLetter.getAttribute('data-title');
+            const content = sourceLetter.innerHTML.trim(); 
+            
+            titleSlot.innerText = title;
+            contentSlot.innerHTML = content.replace(/\n/g, '<br>');
             letterViewModal.classList.add('open');
         }
-        function closeLetterView() { letterViewModal.classList.remove('open'); }
+        
+        function closeLetterView() { 
+            letterViewModal.classList.remove('open'); 
+        }
     </script>
 </body>
 </html>
