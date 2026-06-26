@@ -335,7 +335,6 @@
     </div>
 
     <script>
-        // Esperar a que toda la página (incluyendo fuentes externas) cargue por completo
         window.onload = function() {
             
             const lovePhrases = [
@@ -346,42 +345,39 @@
                 "Eres el amor de mi vida"
             ];
 
-            const loveIcons = ['🌹', '💐', '🏵️', '🤍', '✨', '🌿'];
+            // Se añadió la corona '👑' al set de iconos flotantes
+            const loveIcons = ['🌹', '💐', '🏵️', '🤍', '✨', '🌿', '👑'];
 
             function createFallingElement() {
                 const element = document.createElement('div');
                 element.classList.add('falling-item');
 
-                // 50% de probabilidad para frases o iconos
                 const isPhrase = Math.random() < 0.5;
 
                 if (isPhrase) {
                     const phraseIndex = Math.floor(Math.random() * lovePhrases.length);
                     element.innerText = lovePhrases[phraseIndex];
-                    element.style.fontSize = Math.floor(Math.random() * 6 + 26) + 'px'; // 26px - 32px
-                    element.style.color = "#d4a373"; // Tono oro rosa
+                    element.style.fontFamily = "'Alex Brush', cursive";
+                    element.style.fontSize = Math.floor(Math.random() * 6 + 26) + 'px'; 
+                    element.style.color = "#d4a373"; 
                 } else {
                     const iconIndex = Math.floor(Math.random() * loveIcons.length);
                     element.innerText = loveIcons[iconIndex];
-                    element.style.fontSize = Math.floor(Math.random() * 12 + 20) + 'px'; // 20px - 32px
+                    element.style.fontSize = Math.floor(Math.random() * 12 + 20) + 'px'; 
                 }
                 
-                // Ubicación horizontal aleatoria bien distribuida
                 element.style.left = (Math.random() * 90) + 'vw';
                 
-                // Duración de caída suave (entre 8 y 12 segundos)
                 const duration = (Math.random() * 4 + 8); 
                 element.style.animationDuration = duration + 's';
                 
                 document.body.appendChild(element);
                 
-                // Limpieza absoluta para evitar saturar la memoria
                 setTimeout(() => {
                     element.remove();
                 }, duration * 1000);
             }
 
-            // Iniciar la lluvia de recuerdos cada 700 milisegundos
             setInterval(createFallingElement, 700);
         };
     </script>
