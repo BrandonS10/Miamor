@@ -25,12 +25,46 @@
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 12c1 0 2 1 2 2s-1 2-2 2-2-1-2-2 1-2 2-2zm0 20c1 0 2 1 2 2s-1 2-2 2-2-1-2-2 1-2 2-2z' fill='%23d4a373' fill-opacity='0.08'/%3E%3C/svg%3E");
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- LLUVIA ANIMADA EN EL FONDO --- */
+        .falling-item {
+            position: fixed;
+            top: -30px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.5;
+            user-select: none;
+            animation: fallAndSpin linear forwards;
+        }
+
+        @keyframes fallAndSpin {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(105vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Contenedor principal por encima de la animación */
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         header {
             text-align: center;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
         }
 
         .main-title {
@@ -48,91 +82,129 @@
             margin-top: 5px;
         }
 
-        /* --- CONTENEDOR DE SECCIONES --- */
-        .memories-container {
+        /* --- REPRODUCTOR DE MÚSICA --- */
+        .music-player {
             width: 100%;
-            max-width: 1000px;
-            display: flex;
-            flex-direction: column;
-            gap: 60px;
-        }
-
-        /* --- BLOQUE DE CADA FLOR --- */
-        .flower-section {
-            background: rgba(255, 255, 255, 0.6);
+            max-width: 500px;
+            margin-bottom: 50px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(74, 59, 50, 0.1);
             border: 1px solid var(--warm-sand);
-            border-radius: 30px;
-            padding: 35px;
-            box-shadow: 0 10px 30px rgba(74, 59, 50, 0.03);
+            background: var(--pure-white);
         }
 
-        .section-header {
+        /* --- NUESTRA PELÍCULA (UN SOLO VIDEO) --- */
+        .main-video-section {
+            width: 100%;
+            max-width: 700px;
+            background: var(--pure-white);
+            padding: 20px;
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(74, 59, 50, 0.06);
+            border: 1px solid rgba(212, 163, 115, 0.15);
+            margin-bottom: 60px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .video-title-box {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            color: var(--deep-chestnut);
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 35px;
-            border-bottom: 2px dashed var(--warm-sand);
-            padding-bottom: 15px;
+            gap: 10px;
         }
 
-        .section-header h2 {
+        .video-container {
+            width: 100%;
+            border-radius: 14px;
+            overflow: hidden;
+            background: #000;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+            aspect-ratio: 16 / 9;
+        }
+
+        .video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- ÁLBUM DE IMÁGENES --- */
+        .album-section {
+            width: 100%;
+            text-align: center;
+        }
+
+        .album-title {
             font-family: 'Cinzel', serif;
             font-size: 1.6rem;
             color: var(--deep-chestnut);
-            margin: 0;
+            margin-bottom: 40px;
             letter-spacing: 2px;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
         }
 
-        .flower-icon {
-            font-size: 2rem;
+        .album-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 25%;
+            width: 50%;
+            height: 1px;
+            background: var(--rose-gold);
         }
 
-        /* --- MULTIMEDIA GRIDS --- */
-        .media-grid {
+        .album-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 40px;
             justify-content: center;
-            align-items: start;
         }
 
-        /* --- MARCO POLAROID PARA FOTOS --- */
+        /* --- MARCO POLAROID --- */
         .polaroid-frame {
             background: var(--pure-white);
-            padding: 16px 16px 35px 16px;
+            padding: 16px 16px 40px 16px;
             border-radius: 4px;
             box-shadow: 0 15px 35px rgba(74, 59, 50, 0.08);
             border: 1px solid rgba(212, 163, 115, 0.15);
-            transition: transform 0.3s ease;
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
             position: relative;
             box-sizing: border-box;
         }
 
         .polaroid-frame:hover {
-            transform: scale(1.03) rotate(-1deg);
-            box-shadow: 0 20px 45px rgba(74, 59, 50, 0.12);
+            transform: scale(1.04) rotate(1deg);
+            box-shadow: 0 22px 45px rgba(74, 59, 50, 0.12);
         }
 
         /* Efecto de cinta adhesiva vintage */
         .polaroid-frame::before {
             content: '';
             position: absolute;
-            top: -15px;
+            top: -12px;
             left: 50%;
             transform: translateX(-50%);
             width: 85px;
-            height: 25px;
-            background: rgba(212, 163, 115, 0.25);
-            backdrop-filter: blur(1px);
+            height: 24px;
+            background: rgba(212, 163, 115, 0.22);
         }
 
         .img-holder {
             width: 100%;
-            height: 260px;
+            height: 270px;
             background: var(--bg-cream);
             overflow: hidden;
-            border: 1px solid #f0eae4;
+            border: 1px solid #f2ece6;
+            border-radius: 2px;
         }
 
         .img-holder img {
@@ -141,55 +213,24 @@
             object-fit: cover;
         }
 
-        /* --- MARCO PARA VIDEOS --- */
-        .video-frame {
-            background: var(--pure-white);
-            padding: 16px 16px 20px 16px;
-            border-radius: 16px;
-            box-shadow: 0 15px 35px rgba(74, 59, 50, 0.08);
-            border: 1px solid rgba(212, 163, 115, 0.15);
-            box-sizing: border-box;
-            transition: transform 0.3s ease;
-        }
-
-        .video-frame:hover {
-            transform: scale(1.02) rotate(1deg);
-        }
-
-        .video-holder {
-            width: 100%;
-            height: 260px;
-            background: #000;
-            border-radius: 8px;
-            overflow: hidden;
-        }
-
-        .video-holder video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* --- TEXTOS --- */
         .caption-text {
             font-family: 'Alex Brush', cursive;
             font-size: 2.3rem;
-            margin-top: 15px;
+            margin-top: 18px;
             text-align: center;
             color: var(--deep-chestnut);
-            line-height: 1.1;
+            line-height: 1;
         }
 
-        .video-title {
-            font-family: 'Cinzel', serif;
+        .flower-tag {
+            position: absolute;
+            bottom: 12px;
+            right: 15px;
             font-size: 0.9rem;
-            letter-spacing: 1px;
-            margin-top: 12px;
-            text-align: center;
-            color: var(--rose-gold);
-            font-weight: 600;
+            opacity: 0.5;
         }
 
+        /* --- BOTÓN REGRESAR --- */
         .footer-action {
             margin: 60px 0;
         }
@@ -198,13 +239,13 @@
             display: inline-block;
             background: var(--deep-chestnut);
             color: var(--bg-cream);
-            padding: 12px 35px;
+            padding: 12px 40px;
             border-radius: 50px;
             text-decoration: none;
             font-family: 'Cinzel', serif;
             font-size: 0.8rem;
             letter-spacing: 2px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
             transition: all 0.3s ease;
         }
 
@@ -216,109 +257,116 @@
 </head>
 <body>
 
-    <header>
-        <h1 class="main-title">Nuestro Jardín de Recuerdos</h1>
-        <div class="subtitle">Momentos Inolvidables</div>
-    </header>
+    <div class="content-wrapper">
+        
+        <header>
+            <h1 class="main-title">Nuestro Jardín de Recuerdos</h1>
+            <div class="subtitle">Helen & Brandon</div>
+        </header>
 
-    <main class="memories-container">
+        <!-- --- REPRODUCTOR DE CANCIÓN (YOUTUBE) --- -->
+        <div class="music-player">
+            <!-- Puedes cambiar el ID de la canción (nihGvpDRLtM) por el enlace que desees -->
+            <iframe width="100%" height="200" src="https://www.youtube.com/embed/nihGvpDRLtM" title="Canción de Fondo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
 
-        <!-- ================= SECCIÓN 1: ROSAS ================= -->
-        <section class="flower-section">
-            <div class="section-header">
-                <span class="flower-icon">🌹</span>
-                <h2>Recuerdos de Rosas</h2>
-                <span class="flower-icon">🌹</span>
+        <!-- --- SECCIÓN DE UN SOLO VIDEO --- -->
+        <section class="main-video-section">
+            <div class="video-title-box">
+                <span>🎥</span>
+                <span>Nuestra Película Favorita</span>
+                <span>🎥</span>
             </div>
-            
-            <div class="media-grid">
-                <!-- Foto 1 -->
-                <div class="polaroid-frame">
-                    <div class="img-holder">
-                        <!-- Coloca la ruta de tu imagen aquí en src -->
-                        <img src="ruta_de_tu_foto_rosa1.jpg" alt="Momento Rosa 1" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Tu+Foto+Aquí+🌹'">
-                    </div>
-                    <div class="caption-text">El inicio de todo...</div>
-                </div>
-
-                <!-- Video 1 -->
-                <div class="video-frame">
-                    <div class="video-holder">
-                        <!-- Coloca la ruta de tu video aquí en src (ej. video1.mp4) -->
-                        <video controls poster="miniatura_video.jpg">
-                            <source src="ruta_de_tu_video_rosa1.mp4" type="video/mp4">
-                            Tu navegador no soporta videos.
-                        </video>
-                    </div>
-                    <div class="video-title">🎥 Nuestra Primera Sonrisa</div>
-                </div>
+            <div class="video-container">
+                <!-- Coloca la ruta de tu video principal aquí (ej: recuerdos.mp4) -->
+                <video controls poster="miniatura.jpg">
+                    <source src="ruta_de_tu_video_principal.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de este video.
+                </video>
             </div>
         </section>
 
-
-        <!-- ================= SECCIÓN 2: LIRIOS ================= -->
-        <section class="flower-section">
-            <div class="section-header">
-                <span class="flower-icon">💐</span>
-                <h2>Recuerdos de Lirios</h2>
-                <span class="flower-icon">💐</span>
-            </div>
+        <!-- --- ÁLBUM DE FOTOS ESTILO POLAROID --- -->
+        <section class="album-section">
+            <h2 class="album-title">Colección de Instantes</h2>
             
-            <div class="media-grid">
-                <!-- Foto 2 -->
+            <div class="album-grid">
+                
+                <!-- Foto 1 (Rosas) -->
                 <div class="polaroid-frame">
                     <div class="img-holder">
-                        <img src="ruta_de_tu_foto_lirio1.jpg" alt="Momento Lirio 1" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Tu+Foto+Aquí+💐'">
+                        <img src="foto_rosas1.jpg" alt="Recuerdo de Rosas" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+de+Rosas+🌹'">
                     </div>
-                    <div class="caption-text">Tu mirada favorita</div>
+                    <div class="caption-text">El aroma de nuestra historia</div>
+                    <div class="flower-tag">🌹</div>
                 </div>
 
-                <!-- Video 2 -->
-                <div class="video-frame">
-                    <div class="video-holder">
-                        <video controls>
-                            <source src="ruta_de_tu_video_lirio1.mp4" type="video/mp4">
-                            Tu navegador no soporta videos.
-                        </video>
+                <!-- Foto 2 (Lirios) -->
+                <div class="polaroid-frame">
+                    <div class="img-holder">
+                        <img src="foto_lirios1.jpg" alt="Recuerdo de Lirios" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+de+Lirios+💐'">
                     </div>
-                    <div class="video-title">🎥 Momentos Juntos</div>
+                    <div class="caption-text">Elegancia, amor y fuerza</div>
+                    <div class="flower-tag">💐</div>
                 </div>
+
+                <!-- Foto 3 (Gerberas) -->
+                <div class="polaroid-frame">
+                    <div class="img-holder">
+                        <img src="foto_gerberas1.jpg" alt="Recuerdo de Gerberas" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+de+Gerberas+🏵️'">
+                    </div>
+                    <div class="caption-text">La sonrisa más perfecta</div>
+                    <div class="flower-tag">🏵️</div>
+                </div>
+
+                <!-- Foto 4 (Momento Extra) -->
+                <div class="polaroid-frame">
+                    <div class="img-holder">
+                        <img src="foto_juntos1.jpg" alt="Momento Especial" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Un+Día+Especial+✨'">
+                    </div>
+                    <div class="caption-text">Tú y yo por siempre</div>
+                    <div class="flower-tag">✨</div>
+                </div>
+
             </div>
         </section>
 
+        <footer class="footer-action">
+            <a href="index.html" class="btn-back">← VOLVER AL MENÚ</a>
+        </footer>
 
-        <!-- ================= SECCIÓN 3: GERBERAS ================= -->
-        <section class="flower-section">
-            <div class="section-header">
-                <span class="flower-icon">🏵️</span>
-                <h2>Recuerdos de Gerberas</h2>
-                <span class="flower-icon">🏵️</span>
-            </div>
+    </div>
+
+    <!-- --- CÓDIGO JAVASCRIPT: ANIMACIÓN DE ICONOS FLOTANTES --- -->
+    <script>
+        function createFallingIcon() {
+            // Conjunto balanceado que incluye los iconos solicitados y símbolos románticos
+            const icons = ['🌹', '💐', '🏵️', '🤍', '✨', '🌿'];
+            const element = document.createElement('div');
             
-            <div class="media-grid">
-                <!-- Foto 3 -->
-                <div class="polaroid-frame">
-                    <div class="img-holder">
-                        <img src="ruta_de_tu_foto_gerbera1.jpg" alt="Momento Gerbera 1" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Tu+Foto+Aquí+🏵️'">
-                    </div>
-                    <div class="caption-text">Nuestra hermosa unión</div>
-                </div>
+            element.classList.add('falling-item');
+            element.innerText = icons[Math.floor(Math.random() * icons.length)];
+            
+            // Posicionamiento horizontal aleatorio
+            element.style.left = Math.random() * 100 + 'vw';
+            
+            // Variación de velocidad y tamaño para dar un efecto orgánico de profundidad
+            const duration = Math.random() * 4 + 4; // Entre 4 y 8 segundos
+            element.style.animationDuration = duration + 's';
+            
+            const size = Math.random() * 12 + 16; // Entre 16px y 28px
+            element.style.fontSize = size + 'px';
+            
+            document.body.appendChild(element);
+            
+            // Remover el elemento una vez completada la caída
+            setTimeout(() => {
+                element.remove();
+            }, duration * 1000);
+        }
 
-                <!-- Foto 4 (Puedes poner más fotos o videos duplicando los bloques) -->
-                <div class="polaroid-frame">
-                    <div class="img-holder">
-                        <img src="ruta_de_tu_foto_gerbera2.jpg" alt="Momento Gerbera 2" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Tu+Foto+Aquí+✨'">
-                    </div>
-                    <div class="caption-text">Celebrando el amor</div>
-                </div>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="footer-action">
-        <a href="index.html" class="btn-back">← VOLVER AL MENÚ</a>
-    </footer>
-
+        // Generar un icono flotante continuamente
+        setInterval(createFallingIcon, 450);
+    </script>
 </body>
 </html>
