@@ -32,7 +32,7 @@
         /* --- ELEMENTOS FLOTANTES ANIMADOS (FRASES E ICONOS) --- */
         .falling-item {
             position: fixed;
-            top: -50px; /* Empezar un poco más arriba */
+            top: -60px; 
             pointer-events: none;
             z-index: 1;
             opacity: 0;
@@ -46,14 +46,14 @@
                 transform: translateY(0) translateX(0) rotate(0deg);
                 opacity: 0;
             }
-            10% {
-                opacity: 0.6; /* Un poco más de opacidad inicial */
+            15% {
+                opacity: 0.7; 
             }
-            90% {
-                opacity: 0.6;
+            85% {
+                opacity: 0.7;
             }
             100% {
-                transform: translateY(105vh) translateX(80px) rotate(20deg); /* Mayor movimiento */
+                transform: translateY(105vh) translateX(100px) rotate(25deg); 
                 opacity: 0;
             }
         }
@@ -270,12 +270,10 @@
             <div class="subtitle">Helen & Brandon</div>
         </header>
 
-        <!-- --- REPRODUCTOR DE CANCIÓN (YOUTUBE) --- -->
         <div class="music-player">
             <iframe width="100%" height="200" src="https://www.youtube.com/embed/nihGvpDRLtM" title="Canción de Fondo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
         </div>
 
-        <!-- --- SECCIÓN DE UN SOLO VIDEO --- -->
         <section class="main-video-section">
             <div class="video-title-box">
                 <span>🎥</span>
@@ -290,13 +288,11 @@
             </div>
         </section>
 
-        <!-- --- ÁLBUM DE FOTOS ESTILO POLAROID --- -->
         <section class="album-section">
             <h2 class="album-title">Colección de Instantes</h2>
             
             <div class="album-grid">
                 
-                <!-- Foto 1 (Rosas) -->
                 <div class="polaroid-frame">
                     <div class="img-holder">
                         <img src="foto_rosas1.jpg" alt="Recuerdo de Rosas" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+de+Rosas+🌹'">
@@ -305,7 +301,6 @@
                     <div class="flower-tag">🌹</div>
                 </div>
 
-                <!-- Foto 2 (Lirios) -->
                 <div class="polaroid-frame">
                     <div class="img-holder">
                         <img src="foto_lirios1.jpg" alt="Recuerdo de Lirios" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+de+Lirios+💐'">
@@ -314,7 +309,6 @@
                     <div class="flower-tag">💐</div>
                 </div>
 
-                <!-- Foto 3 (Gerberas) -->
                 <div class="polaroid-frame">
                     <div class="img-holder">
                         <img src="foto_gerberas1.jpg" alt="Recuerdo de Gerberas" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+de+Gerberas+🏵️'">
@@ -323,7 +317,6 @@
                     <div class="flower-tag">🏵️</div>
                 </div>
 
-                <!-- Foto 4 (Momento Extra) -->
                 <div class="polaroid-frame">
                     <div class="img-holder">
                         <img src="foto_juntos1.jpg" alt="Momento Especial" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Un+Día+Especial+✨'">
@@ -341,58 +334,57 @@
 
     </div>
 
-    <!-- --- ANIMACIÓN: ICONOS Y FRASES FLOTANTES --- -->
     <script>
-        // Tus 5 frases personalizadas
-        const lovePhrases = [
-            "A donde tu vayas te seguire",
-            "Me entrego a ti mi amor",
-            "Quiero casarme contigo",
-            "Somos tu y yo",
-            "Eres el amor de mi vida"
-        ];
+        // Esperar a que toda la página (incluyendo fuentes externas) cargue por completo
+        window.onload = function() {
+            
+            const lovePhrases = [
+                "A donde tu vayas te seguire",
+                "Me entrego a ti mi amor",
+                "Quiero casarme contigo",
+                "Somos tu y yo",
+                "Eres el amor de mi vida"
+            ];
 
-        // Iconos de flores y corazones que acompañan
-        const loveIcons = ['🌹', '💐', '🏵️', '🤍', '✨', '🌿'];
+            const loveIcons = ['🌹', '💐', '🏵️', '🤍', '✨', '🌿'];
 
-        function createFallingElement() {
-            const element = document.createElement('div');
-            element.classList.add('falling-item');
+            function createFallingElement() {
+                const element = document.createElement('div');
+                element.classList.add('falling-item');
 
-            // Determinar aleatoriamente si cae una frase (45% probabilidad) o un icono (55%)
-            const isPhrase = Math.random() < 0.45;
+                // 50% de probabilidad para frases o iconos
+                const isPhrase = Math.random() < 0.5;
 
-            if (isPhrase) {
-                // Seleccionar una frase aleatoria
-                const phraseIndex = Math.floor(Math.random() * lovePhrases.length);
-                element.innerText = lovePhrases[phraseIndex];
-                element.style.fontFamily = "'Alex Brush', cursive";
-                element.style.fontSize = (Math.random() * 8 + 24) + 'px'; // Frases legibles (24px - 32px)
-                element.style.color = "var(--rose-gold)";
-            } else {
-                // Seleccionar un icono aleatorio
-                const iconIndex = Math.floor(Math.random() * loveIcons.length);
-                element.innerText = loveIcons[iconIndex];
-                element.style.fontSize = (Math.random() * 14 + 18) + 'px'; // Iconos (18px - 32px)
+                if (isPhrase) {
+                    const phraseIndex = Math.floor(Math.random() * lovePhrases.length);
+                    element.innerText = lovePhrases[phraseIndex];
+                    element.style.fontFamily = "'Alex Brush', cursive";
+                    element.style.fontSize = Math.floor(Math.random() * 6 + 26) + 'px'; // 26px - 32px
+                    element.style.color = "#d4a373"; // Tono oro rosa
+                } else {
+                    const iconIndex = Math.floor(Math.random() * loveIcons.length);
+                    element.innerText = loveIcons[iconIndex];
+                    element.style.fontSize = Math.floor(Math.random() * 12 + 20) + 'px'; // 20px - 32px
+                }
+                
+                // Ubicación horizontal aleatoria bien distribuida
+                element.style.left = (Math.random() * 90) + 'vw';
+                
+                // Duración de caída suave (entre 8 y 12 segundos)
+                const duration = (Math.random() * 4 + 8); 
+                element.style.animationDuration = duration + 's';
+                
+                document.body.appendChild(element);
+                
+                // Limpieza absoluta para evitar saturar la memoria
+                setTimeout(() => {
+                    element.remove();
+                }, duration * 1000);
             }
-            
-            // Ubicación horizontal aleatoria en toda la pantalla
-            element.style.left = Math.random() * 95 + 'vw';
-            
-            // Velocidad orgánica de caída (duración entre 7 y 11 segundos)
-            const duration = Math.random() * 4 + 7; 
-            element.style.animationDuration = duration + 's';
-            
-            document.body.appendChild(element);
-            
-            // Limpieza del DOM al terminar la animación
-            setTimeout(() => {
-                element.remove();
-            }, duration * 1000);
-        }
 
-        // Intervalo de generación (cada 650ms para mantener el fondo sutil y no saturar)
-        setInterval(createFallingElement, 650);
+            // Iniciar la lluvia de recuerdos cada 700 milisegundos
+            setInterval(createFallingElement, 700);
+        };
     </script>
 </body>
 </html>
