@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nuestro Baúl de Recuerdos 🌿✨</title>
+    <title>Nuestro Jardín de Recuerdos 🌿✨</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap');
 
@@ -12,7 +12,6 @@
             --warm-sand: #f0e6df; 
             --rose-gold: #d4a373; 
             --deep-chestnut: #4a3b32; 
-            --sage-green: #ccd5ae;
             --pure-white: #ffffff;
         }
 
@@ -31,7 +30,7 @@
 
         header {
             text-align: center;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
         }
 
         .main-title {
@@ -44,146 +43,94 @@
 
         .subtitle {
             font-family: 'Alex Brush', cursive;
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             color: var(--rose-gold);
             margin-top: 5px;
         }
 
-        /* --- FILTROS DE FLORES --- */
-        .flower-filters {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 35px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .btn-filter {
-            background: var(--pure-white);
-            border: 2px solid var(--warm-sand);
-            color: var(--deep-chestnut);
-            padding: 10px 24px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.02);
-        }
-
-        .btn-filter:hover, .btn-filter.active {
-            background: var(--deep-chestnut);
-            color: var(--bg-cream);
-            border-color: var(--deep-chestnut);
-            transform: translateY(-2px);
-        }
-
-        /* --- SECCIÓN PARA SUBIR FOTOS --- */
-        .upload-section {
-            background: var(--pure-white);
-            border: 1px solid var(--warm-sand);
-            border-radius: 24px;
-            padding: 30px;
-            width: 100%;
-            max-width: 550px;
-            box-shadow: 0 10px 30px rgba(74, 59, 50, 0.05);
-            margin-bottom: 50px;
-            box-sizing: border-box;
-        }
-
-        .upload-section h3 {
-            font-family: 'Cinzel', serif;
-            margin-top: 0;
-            text-align: center;
-            color: var(--deep-chestnut);
-            font-size: 1.2rem;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .form-group label {
-            font-size: 0.85rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .form-group input, .form-group select {
-            padding: 12px;
-            border: 1px solid var(--warm-sand);
-            border-radius: 12px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 0.9rem;
-            background: var(--bg-cream);
-            color: var(--deep-chestnut);
-        }
-
-        .form-group input[type="file"] {
-            background: var(--pure-white);
-            cursor: pointer;
-        }
-
-        .btn-submit {
-            background: var(--rose-gold);
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 12px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            font-family: 'Poppins', sans-serif;
-            transition: background 0.3s ease;
-        }
-
-        .btn-submit:hover {
-            background: #be8f60;
-        }
-
-        /* --- REJILLA DE RECUERDOS POLAROID --- */
-        .memories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-            gap: 40px;
+        /* --- CONTENEDOR DE SECCIONES --- */
+        .memories-container {
             width: 100%;
             max-width: 1000px;
+            display: flex;
+            flex-direction: column;
+            gap: 60px;
         }
 
+        /* --- BLOQUE DE CADA FLOR --- */
+        .flower-section {
+            background: rgba(255, 255, 255, 0.6);
+            border: 1px solid var(--warm-sand);
+            border-radius: 30px;
+            padding: 35px;
+            box-shadow: 0 10px 30px rgba(74, 59, 50, 0.03);
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 35px;
+            border-bottom: 2px dashed var(--warm-sand);
+            padding-bottom: 15px;
+        }
+
+        .section-header h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.6rem;
+            color: var(--deep-chestnut);
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .flower-icon {
+            font-size: 2rem;
+        }
+
+        /* --- MULTIMEDIA GRIDS --- */
+        .media-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            justify-content: center;
+            align-items: start;
+        }
+
+        /* --- MARCO POLAROID PARA FOTOS --- */
         .polaroid-frame {
             background: var(--pure-white);
-            padding: 18px 18px 35px 18px;
+            padding: 16px 16px 35px 16px;
             border-radius: 4px;
             box-shadow: 0 15px 35px rgba(74, 59, 50, 0.08);
             border: 1px solid rgba(212, 163, 115, 0.15);
             transition: transform 0.3s ease;
             position: relative;
+            box-sizing: border-box;
         }
 
         .polaroid-frame:hover {
-            transform: scale(1.03) rotate(1deg);
+            transform: scale(1.03) rotate(-1deg);
+            box-shadow: 0 20px 45px rgba(74, 59, 50, 0.12);
         }
 
+        /* Efecto de cinta adhesiva vintage */
         .polaroid-frame::before {
             content: '';
             position: absolute;
             top: -15px;
             left: 50%;
             transform: translateX(-50%);
-            width: 90px;
+            width: 85px;
             height: 25px;
-            background: rgba(213, 213, 213, 0.4);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+            background: rgba(212, 163, 115, 0.25);
+            backdrop-filter: blur(1px);
         }
 
         .img-holder {
             width: 100%;
-            height: 250px;
-            background: #fdfdfd;
+            height: 260px;
+            background: var(--bg-cream);
             overflow: hidden;
             border: 1px solid #f0eae4;
         }
@@ -194,21 +141,53 @@
             object-fit: cover;
         }
 
-        .polaroid-text {
+        /* --- MARCO PARA VIDEOS --- */
+        .video-frame {
+            background: var(--pure-white);
+            padding: 16px 16px 20px 16px;
+            border-radius: 16px;
+            box-shadow: 0 15px 35px rgba(74, 59, 50, 0.08);
+            border: 1px solid rgba(212, 163, 115, 0.15);
+            box-sizing: border-box;
+            transition: transform 0.3s ease;
+        }
+
+        .video-frame:hover {
+            transform: scale(1.02) rotate(1deg);
+        }
+
+        .video-holder {
+            width: 100%;
+            height: 260px;
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .video-holder video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* --- TEXTOS --- */
+        .caption-text {
             font-family: 'Alex Brush', cursive;
             font-size: 2.3rem;
             margin-top: 15px;
             text-align: center;
             color: var(--deep-chestnut);
-            line-height: 1;
+            line-height: 1.1;
         }
 
-        .tag-flower {
-            position: absolute;
-            bottom: 10px;
-            right: 15px;
-            font-size: 0.85rem;
-            opacity: 0.6;
+        .video-title {
+            font-family: 'Cinzel', serif;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            margin-top: 12px;
+            text-align: center;
+            color: var(--rose-gold);
+            font-weight: 600;
         }
 
         .footer-action {
@@ -226,149 +205,120 @@
             font-size: 0.8rem;
             letter-spacing: 2px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background: var(--rose-gold);
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
 
     <header>
-        <h1 class="main-title">Jardín de Recuerdos</h1>
-        <div class="subtitle">Helen & Brandon</div>
+        <h1 class="main-title">Nuestro Jardín de Recuerdos</h1>
+        <div class="subtitle">Momentos Inolvidables</div>
     </header>
 
-    <section class="upload-section">
-        <h3>✨ Añadir un nuevo momento</h3>
-        <div class="form-group">
-            <label>Selecciona la Foto</label>
-            <input type="file" id="photo-input" accept="image/*">
-        </div>
-        <div class="form-group">
-            <label>Frase o Pie de Foto</label>
-            <input type="text" id="caption-input" placeholder="Ej. El beso bajo la lluvia...">
-        </div>
-        <div class="form-group">
-            <label>Categoría Floral</label>
-            <select id="flower-tag">
-                <option value="🌹 Rosas">🌹 Recuerdos de Rosas (Romance & Comienzos)</option>
-                <option value="💐 Lirios">💐 Recuerdos de Lirios (Fuerza & Elegancia)</option>
-                <option value="🏵️ Gerberas">🏵️ Recuerdos de Gerberas (Unión & Alegría)</option>
-            </select>
-        </div>
-        <button class="btn-submit" onclick="addMemory()">Fijar en el Baúl 📌</button>
-    </section>
+    <main class="memories-container">
 
-    <div class="flower-filters">
-        <button class="btn-filter active" onclick="filterMemories('all')">✨ Ver Todo</button>
-        <button class="btn-filter" onclick="filterMemories('🌹 Rosas')">🌹 Rosas</button>
-        <button class="btn-filter" onclick="filterMemories('💐 Lirios')">💐 Lirios</button>
-        <button class="btn-filter" onclick="filterMemories('🏵️ Gerberas')">🏵️ Gerberas</button>
-    </div>
-
-    <main class="memories-grid" id="memories-box">
-        <div class="polaroid-frame" data-flower="🌹 Rosas">
-            <div class="img-holder">
-                <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600" alt="Default">
+        <!-- ================= SECCIÓN 1: ROSAS ================= -->
+        <section class="flower-section">
+            <div class="section-header">
+                <span class="flower-icon">🌹</span>
+                <h2>Recuerdos de Rosas</h2>
+                <span class="flower-icon">🌹</span>
             </div>
-            <div class="polaroid-text">Nuestro primer San Valentín</div>
-            <div class="tag-flower">🌹 Rosas</div>
-        </div>
+            
+            <div class="media-grid">
+                <!-- Foto 1 -->
+                <div class="polaroid-frame">
+                    <div class="img-holder">
+                        <!-- Coloca la ruta de tu imagen aquí en src -->
+                        <img src="ruta_de_tu_foto_rosa1.jpg" alt="Momento Rosa 1" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Tu+Foto+Aquí+🌹'">
+                    </div>
+                    <div class="caption-text">El inicio de todo...</div>
+                </div>
+
+                <!-- Video 1 -->
+                <div class="video-frame">
+                    <div class="video-holder">
+                        <!-- Coloca la ruta de tu video aquí en src (ej. video1.mp4) -->
+                        <video controls poster="miniatura_video.jpg">
+                            <source src="ruta_de_tu_video_rosa1.mp4" type="video/mp4">
+                            Tu navegador no soporta videos.
+                        </video>
+                    </div>
+                    <div class="video-title">🎥 Nuestra Primera Sonrisa</div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECCIÓN 2: LIRIOS ================= -->
+        <section class="flower-section">
+            <div class="section-header">
+                <span class="flower-icon">💐</span>
+                <h2>Recuerdos de Lirios</h2>
+                <span class="flower-icon">💐</span>
+            </div>
+            
+            <div class="media-grid">
+                <!-- Foto 2 -->
+                <div class="polaroid-frame">
+                    <div class="img-holder">
+                        <img src="ruta_de_tu_foto_lirio1.jpg" alt="Momento Lirio 1" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Tu+Foto+Aquí+💐'">
+                    </div>
+                    <div class="caption-text">Tu mirada favorita</div>
+                </div>
+
+                <!-- Video 2 -->
+                <div class="video-frame">
+                    <div class="video-holder">
+                        <video controls>
+                            <source src="ruta_de_tu_video_lirio1.mp4" type="video/mp4">
+                            Tu navegador no soporta videos.
+                        </video>
+                    </div>
+                    <div class="video-title">🎥 Momentos Juntos</div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ================= SECCIÓN 3: GERBERAS ================= -->
+        <section class="flower-section">
+            <div class="section-header">
+                <span class="flower-icon">🏵️</span>
+                <h2>Recuerdos de Gerberas</h2>
+                <span class="flower-icon">🏵️</span>
+            </div>
+            
+            <div class="media-grid">
+                <!-- Foto 3 -->
+                <div class="polaroid-frame">
+                    <div class="img-holder">
+                        <img src="ruta_de_tu_foto_gerbera1.jpg" alt="Momento Gerbera 1" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Tu+Foto+Aquí+🏵️'">
+                    </div>
+                    <div class="caption-text">Nuestra hermosa unión</div>
+                </div>
+
+                <!-- Foto 4 (Puedes poner más fotos o videos duplicando los bloques) -->
+                <div class="polaroid-frame">
+                    <div class="img-holder">
+                        <img src="ruta_de_tu_foto_gerbera2.jpg" alt="Momento Gerbera 2" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Tu+Foto+Aquí+✨'">
+                    </div>
+                    <div class="caption-text">Celebrando el amor</div>
+                </div>
+            </div>
+        </section>
+
     </main>
 
     <footer class="footer-action">
         <a href="index.html" class="btn-back">← VOLVER AL MENÚ</a>
     </footer>
 
-    <script>
-        // Array temporal para guardar los recuerdos durante la sesión actual
-        let localMemories = [];
-
-        function addMemory() {
-            const fileInput = document.getElementById('photo-input');
-            const captionInput = document.getElementById('caption-input');
-            const flowerSelect = document.getElementById('flower-tag');
-
-            if (!fileInput.files || !fileInput.files[0]) {
-                alert("Por favor amor, selecciona una hermosa fotografía primero. 📸");
-                return;
-            }
-
-            if (captionInput.value.trim() === "") {
-                alert("Ponle una frase linda a la foto para recordarla siempre. ✏️");
-                return;
-            }
-
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-
-            reader.onload = function(e) {
-                const newMemory = {
-                    imageSrc: e.target.result,
-                    caption: captionInput.value,
-                    category: flowerSelect.value
-                };
-
-                localMemories.push(newMemory);
-                renderMemories();
-
-                // Limpiar campos formulario
-                fileInput.value = "";
-                captionInput.value = "";
-            };
-
-            reader.readAsDataURL(file);
-        }
-
-        function renderMemories() {
-            const container = document.getElementById('memories-box');
-            
-            // Mantener el elemento base y añadir los nuevos
-            let baseHTML = `
-                <div class="polaroid-frame" data-flower="🌹 Rosas">
-                    <div class="img-holder">
-                        <img src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=600" alt="Default">
-                    </div>
-                    <div class="polaroid-text">Nuestro primer San Valentín</div>
-                    <div class="tag-flower">🌹 Rosas</div>
-                </div>
-            `;
-
-            localMemories.forEach(memory => {
-                baseHTML += `
-                    <div class="polaroid-frame" data-flower="${memory.category}">
-                        <div class="img-holder">
-                            <img src="${memory.imageSrc}" alt="Memory">
-                        </div>
-                        <div class="polaroid-text">${memory.caption}</div>
-                        <div class="tag-flower">${memory.category}</div>
-                    </div>
-                `;
-            });
-
-            container.innerHTML = baseHTML;
-            
-            // Re-establecer el filtro activo actual
-            const activeFilter = document.querySelector('.btn-filter.active').innerText;
-            if(activeFilter.includes("Rosas")) filterMemories('🌹 Rosas');
-            else if(activeFilter.includes("Lirios")) filterMemories('💐 Lirios');
-            else if(activeFilter.includes("Gerberas")) filterMemories('🏵️ Gerberas');
-        }
-
-        function filterMemories(category) {
-            // Actualizar botones activos
-            const buttons = document.querySelectorAll('.btn-filter');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            
-            event.currentTarget.classList.add('active');
-
-            const cards = document.querySelectorAll('.polaroid-frame');
-            cards.forEach(card => {
-                if (category === 'all' || card.getAttribute('data-flower') === category) {
-                    card.style.display = 'block';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        }
-    </script>
 </body>
 </html>
