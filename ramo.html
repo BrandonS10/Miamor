@@ -32,7 +32,7 @@
         /* --- ELEMENTOS FLOTANTES ANIMADOS (FRASES E ICONOS) --- */
         .falling-item {
             position: fixed;
-            top: -40px;
+            top: -50px; /* Empezar un poco más arriba */
             pointer-events: none;
             z-index: 1;
             opacity: 0;
@@ -47,13 +47,13 @@
                 opacity: 0;
             }
             10% {
-                opacity: 0.55; /* Aparece suavemente al inicio */
+                opacity: 0.6; /* Un poco más de opacidad inicial */
             }
             90% {
-                opacity: 0.55;
+                opacity: 0.6;
             }
             100% {
-                transform: translateY(105vh) translateX(70px) rotate(15deg);
+                transform: translateY(105vh) translateX(80px) rotate(20deg); /* Mayor movimiento */
                 opacity: 0;
             }
         }
@@ -142,7 +142,7 @@
             object-fit: cover;
         }
 
-        /* --- ÁLBUM DE IMÁGENES --- */
+        /* --- ÁLBUM DE FOTOS ESTILO POLAROID --- */
         .album-section {
             width: 100%;
             text-align: center;
@@ -359,24 +359,28 @@
             const element = document.createElement('div');
             element.classList.add('falling-item');
 
-            // Determinar aleatoriamente si cae una frase (40% probabilidad) o un icono (60%)
-            const isPhrase = Math.random() < 0.4;
+            // Determinar aleatoriamente si cae una frase (45% probabilidad) o un icono (55%)
+            const isPhrase = Math.random() < 0.45;
 
             if (isPhrase) {
-                element.innerText = lovePhrases[Math.floor(Math.random() * lovePhrases.length)];
+                // Seleccionar una frase aleatoria
+                const phraseIndex = Math.floor(Math.random() * lovePhrases.length);
+                element.innerText = lovePhrases[phraseIndex];
                 element.style.fontFamily = "'Alex Brush', cursive";
-                element.style.fontSize = (Math.random() * 6 + 22) + 'px'; // Frases legibles (22px - 28px)
+                element.style.fontSize = (Math.random() * 8 + 24) + 'px'; // Frases legibles (24px - 32px)
                 element.style.color = "var(--rose-gold)";
             } else {
-                element.innerText = loveIcons[Math.floor(Math.random() * loveIcons.length)];
-                element.style.fontSize = (Math.random() * 12 + 16) + 'px'; // Iconos (16px - 28px)
+                // Seleccionar un icono aleatorio
+                const iconIndex = Math.floor(Math.random() * loveIcons.length);
+                element.innerText = loveIcons[iconIndex];
+                element.style.fontSize = (Math.random() * 14 + 18) + 'px'; // Iconos (18px - 32px)
             }
             
             // Ubicación horizontal aleatoria en toda la pantalla
             element.style.left = Math.random() * 95 + 'vw';
             
-            // Velocidad orgánica de caída (duración entre 6 y 10 segundos)
-            const duration = Math.random() * 4 + 6; 
+            // Velocidad orgánica de caída (duración entre 7 y 11 segundos)
+            const duration = Math.random() * 4 + 7; 
             element.style.animationDuration = duration + 's';
             
             document.body.appendChild(element);
@@ -387,8 +391,8 @@
             }, duration * 1000);
         }
 
-        // Intervalo de generación (cada 600ms para mantener el fondo sutil y no saturar)
-        setInterval(createFallingElement, 600);
+        // Intervalo de generación (cada 650ms para mantener el fondo sutil y no saturar)
+        setInterval(createFallingElement, 650);
     </script>
 </body>
 </html>
