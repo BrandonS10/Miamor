@@ -29,24 +29,31 @@
             position: relative;
         }
 
-        /* --- LLUVIA ANIMADA EN EL FONDO --- */
+        /* --- ELEMENTOS FLOTANTES ANIMADOS (FRASES E ICONOS) --- */
         .falling-item {
             position: fixed;
-            top: -30px;
+            top: -40px;
             pointer-events: none;
             z-index: 1;
-            opacity: 0.5;
+            opacity: 0;
             user-select: none;
-            animation: fallAndSpin linear forwards;
+            white-space: nowrap;
+            animation: fallAndSway linear forwards;
         }
 
-        @keyframes fallAndSpin {
+        @keyframes fallAndSway {
             0% {
-                transform: translateY(0) rotate(0deg);
-                opacity: 0.7;
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.55; /* Aparece suavemente al inicio */
+            }
+            90% {
+                opacity: 0.55;
             }
             100% {
-                transform: translateY(105vh) translateX(100px) rotate(360deg);
+                transform: translateY(105vh) translateX(70px) rotate(15deg);
                 opacity: 0;
             }
         }
@@ -186,7 +193,6 @@
             box-shadow: 0 22px 45px rgba(74, 59, 50, 0.12);
         }
 
-        /* Efecto de cinta adhesiva vintage */
         .polaroid-frame::before {
             content: '';
             position: absolute;
@@ -266,7 +272,6 @@
 
         <!-- --- REPRODUCTOR DE CANCIÓN (YOUTUBE) --- -->
         <div class="music-player">
-            <!-- Puedes cambiar el ID de la canción (nihGvpDRLtM) por el enlace que desees -->
             <iframe width="100%" height="200" src="https://www.youtube.com/embed/nihGvpDRLtM" title="Canción de Fondo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
         </div>
 
@@ -278,7 +283,6 @@
                 <span>🎥</span>
             </div>
             <div class="video-container">
-                <!-- Coloca la ruta de tu video principal aquí (ej: recuerdos.mp4) -->
                 <video controls poster="miniatura.jpg">
                     <source src="ruta_de_tu_video_principal.mp4" type="video/mp4">
                     Tu navegador no soporta la reproducción de este video.
@@ -337,36 +341,54 @@
 
     </div>
 
-    <!-- --- CÓDIGO JAVASCRIPT: ANIMACIÓN DE ICONOS FLOTANTES --- -->
+    <!-- --- ANIMACIÓN: ICONOS Y FRASES FLOTANTES --- -->
     <script>
-        function createFallingIcon() {
-            // Conjunto balanceado que incluye los iconos solicitados y símbolos románticos
-            const icons = ['🌹', '💐', '🏵️', '🤍', '✨', '🌿'];
+        // Tus 5 frases personalizadas
+        const lovePhrases = [
+            "A donde tu vayas te seguire",
+            "Me entrego a ti mi amor",
+            "Quiero casarme contigo",
+            "Somos tu y yo",
+            "Eres el amor de mi vida"
+        ];
+
+        // Iconos de flores y corazones que acompañan
+        const loveIcons = ['🌹', '💐', '🏵️', '🤍', '✨', '🌿'];
+
+        function createFallingElement() {
             const element = document.createElement('div');
-            
             element.classList.add('falling-item');
-            element.innerText = icons[Math.floor(Math.random() * icons.length)];
+
+            // Determinar aleatoriamente si cae una frase (40% probabilidad) o un icono (60%)
+            const isPhrase = Math.random() < 0.4;
+
+            if (isPhrase) {
+                element.innerText = lovePhrases[Math.floor(Math.random() * lovePhrases.length)];
+                element.style.fontFamily = "'Alex Brush', cursive";
+                element.style.fontSize = (Math.random() * 6 + 22) + 'px'; // Frases legibles (22px - 28px)
+                element.style.color = "var(--rose-gold)";
+            } else {
+                element.innerText = loveIcons[Math.floor(Math.random() * loveIcons.length)];
+                element.style.fontSize = (Math.random() * 12 + 16) + 'px'; // Iconos (16px - 28px)
+            }
             
-            // Posicionamiento horizontal aleatorio
-            element.style.left = Math.random() * 100 + 'vw';
+            // Ubicación horizontal aleatoria en toda la pantalla
+            element.style.left = Math.random() * 95 + 'vw';
             
-            // Variación de velocidad y tamaño para dar un efecto orgánico de profundidad
-            const duration = Math.random() * 4 + 4; // Entre 4 y 8 segundos
+            // Velocidad orgánica de caída (duración entre 6 y 10 segundos)
+            const duration = Math.random() * 4 + 6; 
             element.style.animationDuration = duration + 's';
-            
-            const size = Math.random() * 12 + 16; // Entre 16px y 28px
-            element.style.fontSize = size + 'px';
             
             document.body.appendChild(element);
             
-            // Remover el elemento una vez completada la caída
+            // Limpieza del DOM al terminar la animación
             setTimeout(() => {
                 element.remove();
             }, duration * 1000);
         }
 
-        // Generar un icono flotante continuamente
-        setInterval(createFallingIcon, 450);
+        // Intervalo de generación (cada 600ms para mantener el fondo sutil y no saturar)
+        setInterval(createFallingElement, 600);
     </script>
 </body>
 </html>
