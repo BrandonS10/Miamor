@@ -101,7 +101,7 @@
             background: var(--pure-white);
         }
 
-        /* --- NUESTRA PELÍCULA (REPRODUCTOR YOUTUBE CORREGIDO) --- */
+        /* --- NUESTRA PELÍCULA (UN SOLO VIDEO) --- */
         .main-video-section {
             width: 100%;
             max-width: 700px;
@@ -136,10 +136,10 @@
             aspect-ratio: 16 / 9;
         }
 
-        .video-container iframe {
+        .video-container video {
             width: 100%;
             height: 100%;
-            border: none;
+            object-fit: cover;
         }
 
         /* --- ÁLBUM DE FOTOS ESTILO POLAROID --- */
@@ -281,7 +281,10 @@
                 <span>🎥</span>
             </div>
             <div class="video-container">
-                <iframe src="https://www.youtube.com/watch?v=PDJPpG8e4n4&list=RDPDJPpG8e4n4&start_radio=1" title="Nuestra Película" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                <video controls poster="miniatura.jpg">
+                    <source src="ruta_de_tu_video_principal.mp4" type="video/mp4">
+                    Tu navegador no soporta la reproducción de este video.
+                </video>
             </div>
         </section>
 
@@ -342,6 +345,7 @@
                 "Eres el amor de mi vida"
             ];
 
+            // Se añadió la corona '👑' al set de iconos flotantes
             const loveIcons = ['🌹', '💐', '🏵️', '🤍', '✨', '🌿', '👑'];
 
             function createFallingElement() {
