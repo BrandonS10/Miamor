@@ -1,1 +1,396 @@
 
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recuerdos de la Semana 🗓️✨</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Alex+Brush&family=Cinzel:wght@500;700&family=Poppins:wght@300;400;500;600&display=swap');
+
+        :root {
+            --bg-cream: #fbf8f3; 
+            --warm-sand: #f0e6df; 
+            --rose-gold: #d4a373; 
+            --deep-chestnut: #4a3b32; 
+            --pure-white: #ffffff;
+        }
+
+        body {
+            background-color: var(--bg-cream);
+            color: var(--deep-chestnut);
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* --- ELEMENTOS FLOTANTES ANIMADOS --- */
+        .falling-item {
+            position: fixed;
+            top: -60px; 
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0;
+            user-select: none;
+            white-space: nowrap;
+            animation: fallAndSway linear forwards;
+        }
+
+        @keyframes fallAndSway {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            15% {
+                opacity: 0.7; 
+            }
+            85% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: translateY(105vh) translateX(100px) rotate(25deg); 
+                opacity: 0;
+            }
+        }
+
+        .content-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .main-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            color: var(--deep-chestnut);
+            margin: 0;
+            letter-spacing: 2px;
+        }
+
+        .subtitle {
+            font-family: 'Alex Brush', cursive;
+            font-size: 2.4rem;
+            color: var(--rose-gold);
+            margin-top: 5px;
+        }
+
+        /* --- REPRODUCTOR DE MÚSICA --- */
+        .music-player {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 40px;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 12px 35px rgba(74, 59, 50, 0.1);
+            border: 1px solid var(--warm-sand);
+            background: var(--pure-white);
+        }
+
+        /* --- CUADRÍCULA DEL ÁLBUM SEMANAL --- */
+        .weekly-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+        }
+
+        /* --- MARCO POLAROID --- */
+        .polaroid-frame {
+            background: var(--pure-white);
+            padding: 14px 14px 35px 14px;
+            border-radius: 4px;
+            box-shadow: 0 10px 25px rgba(74, 59, 50, 0.06);
+            border: 1px solid rgba(212, 163, 115, 0.12);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            box-sizing: border-box;
+        }
+
+        /* Variación de rotación aleatoria visual sutil */
+        .polaroid-frame:nth-child(odd) { transform: rotate(-1deg); }
+        .polaroid-frame:nth-child(even) { transform: rotate(1deg); }
+
+        .polaroid-frame:hover {
+            transform: scale(1.04) rotate(0deg) !important;
+            box-shadow: 0 20px 40px rgba(74, 59, 50, 0.12);
+            z-index: 15;
+        }
+
+        .polaroid-frame::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 75px;
+            height: 20px;
+            background: rgba(212, 163, 115, 0.18);
+        }
+
+        .img-holder {
+            width: 100%;
+            height: 250px;
+            background: var(--bg-cream);
+            overflow: hidden;
+            border: 1px solid #f5eee8;
+            border-radius: 2px;
+        }
+
+        .img-holder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .caption-text {
+            font-family: 'Alex Brush', cursive;
+            font-size: 2rem;
+            margin-top: 15px;
+            text-align: center;
+            color: var(--deep-chestnut);
+            line-height: 1;
+        }
+
+        .photo-number {
+            position: absolute;
+            bottom: 8px;
+            right: 12px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--rose-gold);
+            opacity: 0.6;
+        }
+
+        /* --- BOTÓN REGRESAR --- */
+        .footer-action {
+            margin: 50px 0;
+        }
+
+        .btn-back {
+            display: inline-block;
+            background: var(--deep-chestnut);
+            color: var(--bg-cream);
+            padding: 12px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .btn-back:hover {
+            background: var(--rose-gold);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="content-wrapper">
+        
+        <header>
+            <h1 class="main-title">Momentos de la Semana</h1>
+            <div class="subtitle">Cada día más juntos</div>
+        </header>
+
+        <div class="music-player">
+            <iframe width="100%" height="160" src="https://www.youtube.com/embed/nihGvpDRLtM" title="Canción Semanal" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
+        </div>
+
+        <main class="weekly-grid">
+            
+            <div class="polaroid-frame">
+                <div class="img-holder">
+                    <img src="semana_foto1.jpg" alt="Momento 1" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+1+✨'">
+                </div>
+                <div class="caption-text">Comenzando la semana</div>
+                <div class="photo-number">01</div>
+            </div>
+
+            <div class="polaroid-frame">
+                <div class="img-holder">
+                    <img src="semana_foto2.jpg" alt="Momento 2" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+2+✨'">
+                </div>
+                <div class="caption-text">Tu sonrisa de hoy</div>
+                <div class="photo-number">02</div>
+            </div>
+
+            <div class="polaroid-frame">
+                <div class="img-holder">
+                    <img src="semana_foto3.jpg" alt="Momento 3" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+3+✨'">
+                </div>
+                <div class="caption-text">Detalles juntos</div>
+                <div class="photo-number">03</div>
+            </div>
+
+            <div class="polaroid-frame">
+                <div class="img-holder">
+                    <img src="semana_foto4.jpg" alt="Momento 4" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+4+✨'">
+                </div>
+                <div class="caption-text">Nuestro lugar favorito</div>
+                <div class="photo-number">04</div>
+            </div>
+
+            <div class="polaroid-frame">
+                <div class="img-holder">
+                    <img src="semana_foto5.jpg" alt="Momento 5" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+5+✨'">
+                </div>
+                <div class="caption-text">Miradas inolvidables</div>
+                <div class="photo-number">05</div>
+            </div>
+
+            <div class="polaroid-frame">
+                <div class="img-holder">
+                    <img src="semana_foto6.jpg" alt="Momento 6" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+6+✨'">
+                </div>
+                <div class="caption-text">Un café contigo</div>
+                <div class="photo-number">06</div>
+            </div>
+
+            <div class="polaroid-frame">
+                <div class="img-holder">
+                    <img src="semana_foto7.jpg" alt="Momento 7" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+7+✨'">
+                </div>
+                <div class="caption-text">Abrazos infinitos</div>
+                <div class="photo-number">07</div>
+            </div>
+
+            <div class="polaroid-frame">
+                <div class="img-holder">
+                    <img src="semana_foto8.jpg" alt="Momento 8" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+8+✨'">
+                </div>
+                <div class="caption-text">Risas compartidas</div>
+                <div class="photo-number">08</div>
+            </div>
+
+            <div class="polaroid-frame">
+                <div class="img-holder">
+                    <img src="semana_foto9.jpg" alt="Momento 9" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+9+✨'">
+                </div>
+                <div class="caption-text">Amaneceres a tu lado</div>
+                <div class="photo-number">09</div>
+            </div>
+
+            <div class="polaroid-frame">
+                <div class="img-holder">
+                    <img src="semana_foto10.jpg" alt="Momento 10" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+10+✨'">
+                </div>
+                <div class="caption-text">Contando estrellas</div>
+                <div class="photo-number">10</div>
+            </div>
+
+            <div class="polaroid-frame">
+                <div class="img-holder">
+                    <img src="semana_foto11.jpg" alt="Momento 11" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+11+✨'">
+                </div>
+                <div class="caption-text">Caminatas de la mano</div>
+                <div class="photo-number">11</div>
+            </div>
+
+            <div class="polaroid-frame">
+                <div class="img-holder">
+                    <img src="semana_foto12.jpg" alt="Momento 12" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+12+✨'">
+                </div>
+                <div class="caption-text">Nuestra complicidad</div>
+                <div class="photo-number">12</div>
+            </div>
+
+            <div class="polaroid-frame">
+                <div class="img-holder">
+                    <img src="semana_foto13.jpg" alt="Momento 13" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+13+✨'">
+                </div>
+                <div class="caption-text">Haciendo recuerdos</div>
+                <div class="photo-number">13</div>
+            </div>
+
+            <div class="polaroid-frame">
+                <div class="img-holder">
+                    <img src="semana_foto14.jpg" alt="Momento 14" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+14+✨'">
+                </div>
+                <div class="caption-text">Un domingo perfecto</div>
+                <div class="photo-number">14</div>
+            </div>
+
+            <div class="polaroid-frame">
+                <div class="img-holder">
+                    <img src="semana_foto15.jpg" alt="Momento 15" onerror="this.src='https://placehold.co/400x400/f0e6df/4a3b32?text=Foto+15+✨'">
+                </div>
+                <div class="caption-text">Tú, mi calma eterna</div>
+                <div class="photo-number">15</div>
+            </div>
+
+        </main>
+
+        <footer class="footer-action">
+            <a href="index.html" class="btn-back">← VOLVER AL MENÚ</a>
+        </footer>
+
+    </div>
+
+    <script>
+        window.onload = function() {
+            
+            const lovePhrases = [
+                "A donde tu vayas te seguire",
+                "Me entrego a ti mi amor",
+                "Quiero casarme contigo",
+                "Somos tu y yo",
+                "Eres el amor de mi vida"
+            ];
+
+            const loveIcons = ['🌹', '💐', '🏵️', '🤍', '✨', '🌿', '👑'];
+
+            function createFallingElement() {
+                const element = document.createElement('div');
+                element.classList.add('falling-item');
+
+                const isPhrase = Math.random() < 0.5;
+
+                if (isPhrase) {
+                    const phraseIndex = Math.floor(Math.random() * lovePhrases.length);
+                    element.innerText = lovePhrases[phraseIndex];
+                    element.style.fontFamily = "'Alex Brush', cursive";
+                    element.style.fontSize = Math.floor(Math.random() * 6 + 26) + 'px'; 
+                    element.style.color = "#d4a373"; 
+                } else {
+                    const iconIndex = Math.floor(Math.random() * loveIcons.length);
+                    element.innerText = loveIcons[iconIndex];
+                    element.style.fontSize = Math.floor(Math.random() * 12 + 20) + 'px'; 
+                }
+                
+                element.style.left = (Math.random() * 90) + 'vw';
+                
+                const duration = (Math.random() * 4 + 8); 
+                element.style.animationDuration = duration + 's';
+                
+                document.body.appendChild(element);
+                
+                setTimeout(() => {
+                    element.remove();
+                }, duration * 1000);
+            }
+
+            setInterval(createFallingElement, 700);
+        };
+    </script>
+</body>
+</html>
