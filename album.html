@@ -6,8 +6,8 @@
     <title>Nuestro Álbum de Recuerdos Mágicos</title>
     <!-- Iconos de FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts para una tipografía hermosa -->
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght=700&family=Quicksand:wght=400;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
@@ -54,21 +54,14 @@
         }
 
         @keyframes caida {
-            0% {
-                transform: translateY(-20px) rotate(0deg);
-                opacity: 0;
-            }
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 0; }
             10% { opacity: 0.7; }
             90% { opacity: 0.7; }
-            100% {
-                transform: translateY(105vh) rotate(360deg);
-                opacity: 0;
-            }
+            100% { transform: translateY(105vh) rotate(360deg); opacity: 0; }
         }
 
-        /* --- CONTENEDOR PRINCIPAL --- */
         .container {
-            max-width: 900px;
+            max-width: 950px;
             margin: 0 auto;
             padding: 20px;
             position: relative;
@@ -86,7 +79,6 @@
             font-size: 3.5rem;
             color: var(--rosa-oscuro);
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
-            margin-bottom: 10px;
         }
 
         header p {
@@ -95,105 +87,23 @@
             font-style: italic;
         }
 
-        /* --- SECCIÓN SUBIR RECUERDO --- */
-        .seccion-subir {
-            background: var(--blanco-transparente);
-            border: 2px dashed var(--rosa-medio);
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 24px rgba(255, 133, 161, 0.15);
-            backdrop-filter: blur(5px);
+        /* --- ESTILO CALENDARIO (POR MESES) --- */
+        .bloque-mes {
             margin-bottom: 40px;
-            transition: transform 0.3s ease;
-        }
-
-        .seccion-subir:hover {
-            transform: translateY(-2px);
-        }
-
-        .seccion-subir h2 {
-            color: var(--rosa-oscuro);
-            margin-bottom: 20px;
-            font-size: 1.6rem;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .form-grupo {
-            margin-bottom: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        label {
-            font-weight: 600;
-            color: #555;
-        }
-
-        input[type="text"], input[type="date"], textarea {
-            padding: 12px;
-            border: 2px solid var(--rosa-pastel);
-            border-radius: 12px;
-            font-family: inherit;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.3s;
-        }
-
-        input[type="text"]:focus, input[type="date"]:focus, textarea:focus {
-            border-color: var(--rosa-brillante);
-        }
-
-        .input-carpeta-contenedor {
             position: relative;
-            display: flex;
-            align-items: center;
         }
 
-        .prefijo-carpeta {
-            background: #f0f0f0;
-            padding: 12px 15px;
-            border: 2px solid var(--rosa-pastel);
-            border-right: none;
-            border-radius: 12px 0 0 12px;
-            font-weight: 600;
-            color: #777;
-        }
-
-        #nombre-foto {
-            flex: 1;
-            border-radius: 0 12px 12px 0;
-        }
-
-        .btn-guardar {
-            background: linear-gradient(45deg, var(--rosa-brillante), var(--rosa-oscuro));
-            color: white;
-            border: none;
-            padding: 14px 28px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin-top: 15px;
-            box-shadow: 0 4px 15px rgba(247, 37, 133, 0.3);
-            transition: all 0.3s;
-        }
-
-        .btn-guardar:hover {
-            transform: scale(1.02);
-            box-shadow: 0 6px 20px rgba(247, 37, 133, 0.4);
-        }
-
-        /* --- SECCIÓN ÁLBUM --- */
-        .album-titulo {
-            text-align: center;
+        .titulo-mes {
             font-family: 'Dancing Script', cursive;
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             color: var(--rosa-oscuro);
-            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.8);
+            display: inline-block;
+            padding: 5px 20px;
+            border-radius: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            border-left: 5px solid var(--rosa-brillante);
         }
 
         .grid-album {
@@ -202,21 +112,21 @@
             gap: 25px;
         }
 
-        /* Tarjeta de Recuerdo (Efecto Polaroid Hermoso) */
+        /* Tarjeta Polaroid */
         .tarjeta-recuerdo {
             background: white;
             padding: 15px 15px 25px 15px;
             border-radius: 4px;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
-            transform: rotate(var(--rotacion));
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.06);
             position: relative;
+            transform: rotate(var(--rotacion));
+            transition: all 0.3s;
         }
 
         .tarjeta-recuerdo:hover {
-            transform: scale(1.05) rotate(0deg) !important;
-            z-index: 20;
-            box-shadow: 0 15px 35px rgba(247, 37, 133, 0.2);
+            transform: scale(1.04) rotate(0deg) !important;
+            z-index: 5;
+            box-shadow: 0 15px 30px rgba(247, 37, 133, 0.15);
         }
 
         .tarjeta-recuerdo::before {
@@ -225,17 +135,14 @@
             top: -12px;
             left: 46%;
             font-size: 1.2rem;
-            z-index: 5;
         }
 
         .contenedor-foto-tarjeta {
             width: 100%;
             height: 230px;
             overflow: hidden;
-            border: 1px solid #eee;
+            border: 1px solid #f5f5f5;
             margin-bottom: 15px;
-            position: relative;
-            background: #fafafa;
         }
 
         .contenedor-foto-tarjeta img {
@@ -244,14 +151,14 @@
             object-fit: cover;
         }
 
-        .fecha-tarjeta {
+        .dia-etiqueta {
             display: inline-block;
             background: var(--rosa-pastel);
             color: var(--rosa-oscuro);
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 20px;
             font-size: 0.85rem;
-            font-weight: 600;
+            font-weight: 700;
             margin-bottom: 8px;
         }
 
@@ -259,37 +166,13 @@
             font-size: 1.2rem;
             font-weight: 600;
             color: #333;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
 
         .descripcion-tarjeta {
             font-size: 0.95rem;
             color: #666;
             line-height: 1.4;
-        }
-
-        .btn-eliminar {
-            position: absolute;
-            bottom: 10px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: #ccc;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: color 0.3s;
-        }
-
-        .btn-eliminar:hover {
-            color: var(--rosa-oscuro);
-        }
-
-        .sin-recuerdos {
-            grid-column: 1 / -1;
-            text-align: center;
-            padding: 40px;
-            color: #aaa;
-            font-style: italic;
         }
     </style>
 </head>
@@ -299,55 +182,114 @@
 
     <div class="container">
         <header>
-            <h1>Mis Regalitos y Recuerdos</h1>
-            <p>Un espacio mágico para revivir cada detalle inolvidable ✨</p>
+            <h1>Nuestro Álbum de Recuerdos</h1>
+            <p>Momentos preciosos organizados en el tiempo ✨</p>
         </header>
 
-        <!-- Formulario para agregar recuerdos -->
-        <section class="seccion-subir">
-            <h2><i class="fa-solid fa-heart-circle-plus"></i> Añadir un nuevo momento</h2>
-            <form id="form-recuerdo">
-                <div class="form-grupo">
-                    <label for="titulo">¿Qué regalito o momento es?</label>
-                    <input type="text" id="titulo" placeholder="Ej. El oso gigante que me diste" required>
-                </div>
-
-                <div class="form-grupo">
-                    <label for="fecha">Fecha especial:</label>
-                    <input type="date" id="fecha" required>
-                </div>
-
-                <div class="form-grupo">
-                    <label for="descripcion">Cuéntame la historia de este día:</label>
-                    <textarea id="descripcion" rows="3" placeholder="Detalles hermosos que no quieres olvidar..." required></textarea>
-                </div>
-
-                <div class="form-grupo">
-                    <label for="nombre-foto">Nombre de la foto guardada en tu carpeta:</label>
-                    <div class="input-carpeta-contenedor">
-                        <span class="prefijo-carpeta">fotos/</span>
-                        <input type="text" id="nombre-foto" placeholder="ejemplo.jpg" required>
-                    </div>
-                </div>
-
-                <button type="submit" class="btn-guardar">Guardar en el álbum 💞</button>
-            </form>
-        </section>
-
-        <hr style="border: 0; height: 1px; background: linear-gradient(to right, transparent, var(--rosa-medio), transparent); margin-bottom: 40px;">
-
-        <!-- El álbum de fotos -->
-        <section>
-            <h2 class="album-titulo">Nuestro Álbum de Recuerdos</h2>
-            <div class="grid-album" id="contenedor-album">
-                <!-- Los recuerdos se cargarán aquí -->
-            </div>
-        </section>
+        <!-- Aquí se dibuja el calendario automáticamente -->
+        <section id="calendario-recuerdos"></section>
     </div>
 
     <script>
-        // --- 1. CONFIGURACIÓN DE LA LLUVIA DE ICONOS ---
-        const iconos = ['❤️', '💖', '✨', '🌸', '🎁', '🧸', '💝'];
+        // ==========================================
+        // TU ARRAY DE FOTOS (Aquí agregas tus recuerdos)
+        // ==========================================
+        // La fecha debe ir siempre en formato "AAAA-MM-DD"
+        // La foto debe ser el nombre exacto que tiene en tu carpeta fotosalbum/
+        
+        const misRecuerdos = [
+            {
+                titulo: "Nuestro primer picnic",
+                fecha: "2026-05-14",
+                descripcion: "Comimos fresas con chocolate y pasamos una tarde increíble juntos bajo el sol.",
+                foto: "picnic.jpg"
+            },
+            {
+                titulo: "El oso gigante de regalo",
+                fecha: "2026-05-20",
+                descripcion: "Llegaste de sorpresa con este peluche hermoso que apenas cabía por la puerta.",
+                foto: "oso.png"
+            },
+            {
+                titulo: "Cena de aniversario",
+                fecha: "2026-06-02",
+                descripcion: "Fuimos a cenar delicioso para celebrar nuestro tiempo juntos. Todo estuvo precioso.",
+                foto: "cena.jpg"
+            }
+            // Cuando quieras agregar uno nuevo, pones una coma aquí abajo y copias el bloque:
+            // ,{
+            //    titulo: "Nuevo recuerdo",
+            //    fecha: "2026-07-07",
+            //    descripcion: "Descripción del momento...",
+            //    foto: "nombre_de_la_foto.jpg"
+            // }
+        ];
+
+        // ==========================================
+        // LÓGICA AUTOMÁTICA DEL CALENDARIO
+        // ==========================================
+        const calendarioRecuerdos = document.getElementById('calendario-recuerdos');
+
+        // Ordenar los recuerdos por fecha (más recientes primero)
+        misRecuerdos.sort((a, b) => new Date(b.fecha) - new Date(a.fecha));
+
+        const mesesNombre = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"];
+        let datosAgrupados = {};
+
+        // Agruparlos por Año y Mes
+        misRecuerdos.forEach((recuerdo) => {
+            const partes = recuerdo.fecha.split('-');
+            if(partes.length === 3) {
+                const anio = partes[0];
+                const mesIndex = parseInt(partes[1], 10) - 1;
+                const dia = partes[2];
+                const nombreMesAnio = `${mesesNombre[mesIndex]} ${anio}`;
+
+                if(!datosAgrupados[nombreMesAnio]) {
+                    datosAgrupados[nombreMesAnio] = [];
+                }
+                
+                datosAgrupados[nombreMesAnio].push({
+                    dia: dia,
+                    ...recuerdo
+                });
+            }
+        });
+
+        // Pintar los bloques de meses y sus fotos en la página
+        for (const [mesAnio, recuerdos] of Object.entries(datosAgrupados)) {
+            const bloque = document.createElement('div');
+            bloque.classList.add('bloque-mes');
+            
+            bloque.innerHTML = `<h3 class="titulo-mes"><i class="fa-regular fa-calendar"></i> ${mesAnio}</h3>`;
+            
+            const grid = document.createElement('div');
+            grid.classList.add('grid-album');
+
+            recuerdos.forEach(recuerdo => {
+                const rotacion = (Math.random() * 6 - 3).toFixed(2) + 'deg';
+                const tarjeta = document.createElement('div');
+                tarjeta.classList.add('tarjeta-recuerdo');
+                tarjeta.style.setProperty('--rotacion', rotacion);
+
+                tarjeta.innerHTML = `
+                    <div class="contenedor-foto-tarjeta">
+                        <!-- Busca la foto directamente dentro de tu carpeta fotosalbum/ -->
+                        <img src="fotosalbum/${recuerdo.foto}" alt="Recuerdo">
+                    </div>
+                    <span class="dia-etiqueta">Día ${recuerdo.dia}</span>
+                    <h4 class="titulo-tarjeta">${recuerdo.titulo}</h4>
+                    <p class="descripcion-tarjeta">${recuerdo.descripcion}</p>
+                `;
+                grid.appendChild(tarjeta);
+            });
+
+            bloque.appendChild(grid);
+            calendarioRecuerdos.appendChild(bloque);
+        }
+
+        // --- ANIMACIÓN DE ICONOS CAYENDO ---
+        const iconos = ['❤️', '💖', '✨', '🌸', '🎁', '💝'];
         const contenedorLluvia = document.getElementById('lluvia');
 
         function crearIcono() {
@@ -362,93 +304,6 @@
             setTimeout(() => { icono.remove(); }, 6000);
         }
         setInterval(crearIcono, 400);
-
-        // --- 2. SISTEMA DEL ÁLBUM CON RUTAS LOCALES ---
-        const form = document.getElementById('form-recuerdo');
-        const contenedorAlbum = document.getElementById('contenedor-album');
-
-        document.addEventListener('DOMContentLoaded', mostrarRecuerdos);
-
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const titulo = document.getElementById('titulo').value;
-            const fecha = document.getElementById('fecha').value;
-            const descripcion = document.getElementById('descripcion').value;
-            const nombreFoto = document.getElementById('nombre-foto').value;
-
-            // Construimos la ruta relativa apuntando a tu carpeta física
-            const rutaCompletaFoto = 'fotos/' + nombreFoto;
-
-            const nuevoRecuerdo = {
-                id: Date.now(),
-                titulo: titulo,
-                fecha: formatearFecha(fecha),
-                fechaRaw: fecha,
-                descripcion: descripcion,
-                foto: rutaCompletaFoto // Guardamos la ruta del archivo
-            };
-
-            let recuerdos = JSON.parse(localStorage.getItem('misRecuerdosRutas')) || [];
-            recuerdos.push(nuevoRecuerdo);
-            
-            // Ordenar: Los más recientes primero
-            recuerdos.sort((a, b) => new Date(b.fechaRaw) - new Date(a.fechaRaw));
-
-            localStorage.setItem('misRecuerdosRutas', JSON.stringify(recuerdos));
-
-            form.reset();
-            mostrarRecuerdos();
-        });
-
-        function formatearFecha(fechaStr) {
-            const partes = fechaStr.split('-');
-            if(partes.length === 3) {
-                return `${partes[2]}/${partes[1]}/${partes[0]}`;
-            }
-            return fechaStr;
-        }
-
-        function mostrarRecuerdos() {
-            contenedorAlbum.innerHTML = '';
-            const recuerdos = JSON.parse(localStorage.getItem('misRecuerdosRutas')) || [];
-
-            if (recuerdos.length === 0) {
-                contenedorAlbum.innerHTML = `<div class="sin-recuerdos">💖 Aún no hay recuerdos en el álbum. ¡Añade el primero arriba! 💖</div>`;
-                return;
-            }
-
-            recuerdos.forEach(recuerdo => {
-                const rotacionAleatoria = (Math.random() * 6 - 3).toFixed(2) + 'deg';
-
-                const tarjeta = document.createElement('div');
-                tarjeta.classList.add('tarjeta-recuerdo');
-                tarjeta.style.setProperty('--rotacion', rotacionAleatoria);
-
-                tarjeta.innerHTML = `
-                    <div class="contenedor-foto-tarjeta">
-                        <img src="${recuerdo.foto}" alt="Momento hermoso" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=500&auto=format&fit=crop'; console.log('No se encontró la foto en la carpeta local');">
-                    </div>
-                    <span class="fecha-tarjeta"><i class="fa-regular fa-calendar-days"></i> ${recuerdo.fecha}</span>
-                    <h3 class="titulo-tarjeta">${recuerdo.titulo}</h3>
-                    <p class="descripcion-tarjeta">${recuerdo.descripcion}</p>
-                    <button class="btn-eliminar" onclick="eliminarRecuerdo(${recuerdo.id})">
-                        <i class="fa-solid fa-trash-can"></i>
-                    </button>
-                `;
-
-                contenedorAlbum.appendChild(tarjeta);
-            });
-        }
-
-        window.eliminarRecuerdo = function(id) {
-            if(confirm("¿Seguro que quieres quitar este recuerdo de tu álbum? 🥺")) {
-                let recuerdos = JSON.parse(localStorage.getItem('misRecuerdosRutas')) || [];
-                recuerdos = recuerdos.filter(r => r.id !== id);
-                localStorage.setItem('misRecuerdosRutas', JSON.stringify(recuerdos));
-                mostrarRecuerdos();
-            }
-        }
     </script>
 </body>
 </html>
