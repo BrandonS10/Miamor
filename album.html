@@ -15,7 +15,7 @@
             --rosa-medio: #ffb3c6;
             --rosa-brillante: #ff85a1;
             --rosa-oscuro: #f72585;
-            --blanco-transparente: rgba(255, 255, 255, 0.85);
+            --blanco-transparente: rgba(255, 255, 255, 0.9);
         }
 
         * {
@@ -36,8 +36,6 @@
 
         /* --- EFECTO DE ICONOS CAYENDO --- */
         .lluvia-iconos {
-            position: fixed;
-            top: -50px;
             position: fixed;
             top: 0;
             left: 0;
@@ -148,25 +146,25 @@
             border-color: var(--rosa-brillante);
         }
 
-        /* Personalizar el botón de archivo */
-        .file-upload-btn {
-            background: #fff;
-            border: 2px dashed var(--rosa-brillante);
-            padding: 15px;
-            border-radius: 12px;
-            text-align: center;
-            cursor: pointer;
-            color: var(--rosa-oscuro);
+        .input-carpeta-contenedor {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .prefijo-carpeta {
+            background: #f0f0f0;
+            padding: 12px 15px;
+            border: 2px solid var(--rosa-pastel);
+            border-right: none;
+            border-radius: 12px 0 0 12px;
             font-weight: 600;
-            transition: all 0.3s;
+            color: #777;
         }
 
-        .file-upload-btn:hover {
-            background: var(--rosa-pastel);
-        }
-
-        #input-foto {
-            display: none;
+        #nombre-foto {
+            flex: 1;
+            border-radius: 0 12px 12px 0;
         }
 
         .btn-guardar {
@@ -221,7 +219,6 @@
             box-shadow: 0 15px 35px rgba(247, 37, 133, 0.2);
         }
 
-        /* Chincheta/Pin digital */
         .tarjeta-recuerdo::before {
             content: '📌';
             position: absolute;
@@ -298,7 +295,6 @@
 </head>
 <body>
 
-    <!-- Contenedor para los iconos cayendo -->
     <div class="lluvia-iconos" id="lluvia"></div>
 
     <div class="container">
@@ -313,7 +309,7 @@
             <form id="form-recuerdo">
                 <div class="form-grupo">
                     <label for="titulo">¿Qué regalito o momento es?</label>
-                    <input type="text" id="titulo" placeholder="" required>
+                    <input type="text" id="titulo" placeholder="Ej. El oso gigante que me diste" required>
                 </div>
 
                 <div class="form-grupo">
@@ -323,15 +319,15 @@
 
                 <div class="form-grupo">
                     <label for="descripcion">Cuéntame la historia de este día:</label>
-                    <textarea id="descripcion" rows="3" placeholder="" required></textarea>
+                    <textarea id="descripcion" rows="3" placeholder="Detalles hermosos que no quieres olvidar..." required></textarea>
                 </div>
 
                 <div class="form-grupo">
-                    <label>Sube una foto bonita:</label>
-                    <label class="file-upload-btn" for="input-foto">
-                        <i class="fa-solid fa-camera"></i> <span id="texto-archivo">Seleccionar Foto desde tu dispositivo</span>
-                    </label>
-                    <input type="file" id="input-foto" accept="image/*" required>
+                    <label for="nombre-foto">Nombre de la foto guardada en tu carpeta:</label>
+                    <div class="input-carpeta-contenedor">
+                        <span class="prefijo-carpeta">fotos/</span>
+                        <input type="text" id="nombre-foto" placeholder="ejemplo.jpg" required>
+                    </div>
                 </div>
 
                 <button type="submit" class="btn-guardar">Guardar en el álbum 💞</button>
@@ -344,7 +340,7 @@
         <section>
             <h2 class="album-titulo">Nuestro Álbum de Recuerdos</h2>
             <div class="grid-album" id="contenedor-album">
-                <!-- Los recuerdos se cargarán aquí dinámicamente -->
+                <!-- Los recuerdos se cargarán aquí -->
             </div>
         </section>
     </div>
@@ -357,84 +353,54 @@
         function crearIcono() {
             const icono = document.createElement('div');
             icono.classList.add('corazon-cayendo');
-            
-            // Elegir icono aleatorio
             icono.innerText = iconos[Math.floor(Math.random() * iconos.length)];
-            
-            // Configurar propiedades aleatorias
             icono.style.left = Math.random() * 100 + 'vw';
-            icono.style.animationDuration = Math.random() * 3 + 3 + 's'; // Entre 3 y 6 segundos
-            icono.style.fontSize = Math.random() * 15 + 12 + 'px'; // Tamaños sutiles
+            icono.style.animationDuration = Math.random() * 3 + 3 + 's';
+            icono.style.fontSize = Math.random() * 15 + 12 + 'px';
             
             contenedorLluvia.appendChild(icono);
-
-            // Eliminar después de terminar la animación para no saturar
-            setTimeout(() => {
-                icono.remove();
-            }, 6000);
+            setTimeout(() => { icono.remove(); }, 6000);
         }
-
-        // Crear un icono cada 400 milisegundos
         setInterval(crearIcono, 400);
 
-        // --- 2. SISTEMA DEL ÁLBUM (JAVASCRIPT INDEPENDIENTE) ---
+        // --- 2. SISTEMA DEL ÁLBUM CON RUTAS LOCALES ---
         const form = document.getElementById('form-recuerdo');
-        const inputFoto = document.getElementById('input-foto');
-        const textoArchivo = document.getElementById('texto-archivo');
         const contenedorAlbum = document.getElementById('contenedor-album');
 
-        // Mostrar nombre del archivo seleccionado
-        inputFoto.addEventListener('change', function() {
-            if(this.files && this.files[0]) {
-                textoArchivo.innerText = "¡Foto lista: " + this.files[0].name.substring(0, 20) + "...!";
-            }
-        });
-
-        // Cargar recuerdos guardados al iniciar
         document.addEventListener('DOMContentLoaded', mostrarRecuerdos);
 
-        // Evento para guardar un nuevo recuerdo
         form.addEventListener('submit', function(e) {
             e.preventDefault();
 
             const titulo = document.getElementById('titulo').value;
             const fecha = document.getElementById('fecha').value;
             const descripcion = document.getElementById('descripcion').value;
-            const archivo = inputFoto.files[0];
+            const nombreFoto = document.getElementById('nombre-foto').value;
 
-            if (!archivo) return;
+            // Construimos la ruta relativa apuntando a tu carpeta física
+            const rutaCompletaFoto = 'fotos/' + nombreFoto;
 
-            // Convertimos la imagen a Base64 para guardarla fácilmente en el navegador (localStorage)
-            const reader = new FileReader();
-            reader.onload = function(event) {
-                const fotoBase64 = event.target.result;
-
-                const nuevoRecuerdo = {
-                    id: Date.now(),
-                    titulo: titulo,
-                    fecha: formatearFecha(fecha), // Formateamos la fecha para que se vea preciosa
-                    fechaRaw: fecha, // Guardamos el orden original
-                    descripcion: descripcion,
-                    foto: fotoBase64
-                };
-
-                let recuerdos = JSON.parse(localStorage.getItem('misRecuerdos')) || [];
-                recuerdos.push(nuevoRecuerdo);
-                
-                // Ordenar por fecha (los más recientes primero)
-                recuerdos.sort((a, b) => new Date(b.fechaRaw) - new Date(a.fechaRaw));
-
-                localStorage.setItem('misRecuerdos', JSON.stringify(recuerdos));
-
-                form.reset();
-                textoArchivo.innerText = "Seleccionar Foto desde tu dispositivo";
-                mostrarRecuerdos();
+            const nuevoRecuerdo = {
+                id: Date.now(),
+                titulo: titulo,
+                fecha: formatearFecha(fecha),
+                fechaRaw: fecha,
+                descripcion: descripcion,
+                foto: rutaCompletaFoto // Guardamos la ruta del archivo
             };
 
-            reader.readAsDataURL(archivo);
+            let recuerdos = JSON.parse(localStorage.getItem('misRecuerdosRutas')) || [];
+            recuerdos.push(nuevoRecuerdo);
+            
+            // Ordenar: Los más recientes primero
+            recuerdos.sort((a, b) => new Date(b.fechaRaw) - new Date(a.fechaRaw));
+
+            localStorage.setItem('misRecuerdosRutas', JSON.stringify(recuerdos));
+
+            form.reset();
+            mostrarRecuerdos();
         });
 
-        // Función para cambiar formato de fecha (AAAA-MM-DD a DD/MM/AAAA o texto lindo)
         function formatearFecha(fechaStr) {
             const partes = fechaStr.split('-');
             if(partes.length === 3) {
@@ -443,10 +409,9 @@
             return fechaStr;
         }
 
-        // Función para pintar los recuerdos en pantalla
         function mostrarRecuerdos() {
             contenedorAlbum.innerHTML = '';
-            const recuerdos = JSON.parse(localStorage.getItem('misRecuerdos')) || [];
+            const recuerdos = JSON.parse(localStorage.getItem('misRecuerdosRutas')) || [];
 
             if (recuerdos.length === 0) {
                 contenedorAlbum.innerHTML = `<div class="sin-recuerdos">💖 Aún no hay recuerdos en el álbum. ¡Añade el primero arriba! 💖</div>`;
@@ -454,7 +419,6 @@
             }
 
             recuerdos.forEach(recuerdo => {
-                // Creamos una rotación aleatoria ligera para simular fotos polaroid reales pegadas
                 const rotacionAleatoria = (Math.random() * 6 - 3).toFixed(2) + 'deg';
 
                 const tarjeta = document.createElement('div');
@@ -463,7 +427,7 @@
 
                 tarjeta.innerHTML = `
                     <div class="contenedor-foto-tarjeta">
-                        <img src="${recuerdo.foto}" alt="Momento hermoso">
+                        <img src="${recuerdo.foto}" alt="Momento hermoso" onerror="this.src='https://images.unsplash.com/photo-1518199266791-5375a83190b7?q=80&w=500&auto=format&fit=crop'; console.log('No se encontró la foto en la carpeta local');">
                     </div>
                     <span class="fecha-tarjeta"><i class="fa-regular fa-calendar-days"></i> ${recuerdo.fecha}</span>
                     <h3 class="titulo-tarjeta">${recuerdo.titulo}</h3>
@@ -477,12 +441,11 @@
             });
         }
 
-        // Función para borrar un recuerdo del álbum
         window.eliminarRecuerdo = function(id) {
-            if(confirm("¿Seguro que quieres quitar este lindo recuerdo de tu álbum? 🥺")) {
-                let recuerdos = JSON.parse(localStorage.getItem('misRecuerdos')) || [];
+            if(confirm("¿Seguro que quieres quitar este recuerdo de tu álbum? 🥺")) {
+                let recuerdos = JSON.parse(localStorage.getItem('misRecuerdosRutas')) || [];
                 recuerdos = recuerdos.filter(r => r.id !== id);
-                localStorage.setItem('misRecuerdos', JSON.stringify(recuerdos));
+                localStorage.setItem('misRecuerdosRutas', JSON.stringify(recuerdos));
                 mostrarRecuerdos();
             }
         }
